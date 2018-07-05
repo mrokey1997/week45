@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#271d5d"
-    tools:context=".features.wellcome.StartActivity">
+    tools:context=".welcome.WelcomeActivity">
 
     <TextView
         android:id="@+id/txtStart"

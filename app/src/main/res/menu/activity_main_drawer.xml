@@ -8,14 +8,15 @@
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home"
             android:title="Home" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+
         <item
             android:id="@+id/nav_taxi"
             android:icon="@drawable/ic_taxi"
             android:title="Taxi Fare &amp; chages" />
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/ic_setting"
+            android:title="Tools" />
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout"
