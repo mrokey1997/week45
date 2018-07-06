@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/darkBlue">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/marginEditText"
+        android:layout_marginTop="@dimen/marginEditText"
+        android:layout_marginEnd="@dimen/marginEditText"
+        app:cardElevation="10dp"
+        app:cardBackgroundColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/edt_username"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/username"
+                android:drawableStart="@drawable/ic_username"
+                android:drawablePadding="16dp"
+                android:paddingStart="16dp"
+                android:background="@drawable/border"
+                android:inputType="text" />
+
+
+            <EditText
+                android:id="@+id/edt_email"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/email_address"
+                android:inputType="textEmailAddress"
+                android:drawableStart="@drawable/ic_email"
+                android:drawablePadding="16dp"
+                android:paddingStart="16dp"
+                android:background="@drawable/border"/>
+
+            <EditText
+                android:id="@+id/edt_password"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:drawableStart="@drawable/ic_password"
+                android:drawablePadding="16dp"
+                android:paddingStart="16dp"
+                android:background="@drawable/border" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+
+    <EditText
+        android:id="@+id/btn_facebook"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:textSize="@dimen/normalText"
+        android:textColor="@color/darkBlue"
+        android:textStyle="bold"
+        android:background="@drawable/shape"
+        android:drawableStart="@drawable/ic_facebook"
+        android:drawablePadding="16dp"
+        android:paddingStart="40dp"
+        android:focusable="false"
+        android:text="@string/login_fb"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_view" />
+
+    <EditText
+        android:id="@+id/btn_email"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/shape"
+        android:drawableStart="@drawable/ic_email"
+        android:drawablePadding="16dp"
+        android:focusable="false"
+        android:paddingStart="40dp"
+        android:text="@string/login_email"
+        android:textColor="@color/darkBlue"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_facebook" />
+
+</android.support.constraint.ConstraintLayout>
