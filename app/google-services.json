@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "899707323390",
+    "firebase_url": "https://besttrip-8f15e.firebaseio.com",
+    "project_id": "besttrip-8f15e",
+    "storage_bucket": "besttrip-8f15e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899707323390:android:3f21fb033f2d5fcf",
+        "android_client_info": {
+          "package_name": "com.example.mrokey.besttrip"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "899707323390-t8bjp7791dlinj5634olv4rvv4r213sv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqikTWefazxQ9xMhBfDIYLOzK0vPkGCyo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
