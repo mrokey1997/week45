@@ -1,5 +1,6 @@
 package com.example.mrokey.besttrip.features.authentication.signin
 
+import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 
 interface SignInContract {
@@ -14,10 +15,14 @@ interface SignInContract {
 
         fun getSuccess()
 
+        fun onSuccessLoginFacebook(result: LoginResult?)
+
     }
     interface Presenter{
         fun checkAccount(email:String, password: String)
 
         fun authWithGoogle(acct: GoogleSignInAccount)
+
+        fun authWithFacebook()
     }
 }

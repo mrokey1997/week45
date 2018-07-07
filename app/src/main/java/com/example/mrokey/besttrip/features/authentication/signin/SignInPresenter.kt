@@ -1,20 +1,31 @@
 package com.example.mrokey.besttrip.features.authentication.signin
+
 import android.content.ContentValues
 import android.text.TextUtils
 import android.util.Log
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.FacebookSdk
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-class SignInPresenter(internal var view: SignInContract.View) : SignInContract.Presenter {
+
+class SignInPresenter(internal var view: SignInContract.View, val callbackManager: CallbackManager) : SignInContract.Presenter {
+
     var myRef: DatabaseReference? = null
     var mAuth: FirebaseAuth? = null
+
     init {
         view.setPresenter(this)
         mAuth = FirebaseAuth.getInstance()
         myRef= FirebaseDatabase.getInstance().reference
     }
+
     override fun checkAccount(email: String, password: String) {
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
             view.showLoading(true)
@@ -39,6 +50,7 @@ class SignInPresenter(internal var view: SignInContract.View) : SignInContract.P
             view.showError("Enter all details")
         }
     }
+
     //SignIn with Google mail
     override fun authWithGoogle(acct: GoogleSignInAccount) {
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
@@ -53,6 +65,22 @@ class SignInPresenter(internal var view: SignInContract.View) : SignInContract.P
                         view.showError(message)
                     }
                 }
+    }
+
+    override fun authWithFacebook() {
+        LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+            override fun onSuccess(result: LoginResult?) {
+                view.onSuccessLoginFacebook(result)
+            }
+
+            override fun onCancel() {
+
+            }
+
+            override fun onError(error: FacebookException?) {
+
+            }
+        })
     }
 
 }

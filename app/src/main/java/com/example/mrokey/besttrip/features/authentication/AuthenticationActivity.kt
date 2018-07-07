@@ -9,12 +9,15 @@ import com.example.mrokey.besttrip.features.authentication.signup.SignUpFragment
 import kotlinx.android.synthetic.main.activity_authentication.*
 
 class AuthenticationActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authentication)
+
         setupViewPager()
         tab_layout.setupWithViewPager(view_pager)
     }
+
     private fun setupViewPager() {
         val adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(SignInFragment(), "Sign in")

@@ -4,9 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/darkBlue">
-
+    android:layout_height="match_parent">
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
@@ -30,7 +28,7 @@
                 android:id="@+id/edt_email"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@drawable/shape"
+                android:background="@drawable/border"
                 android:drawableStart="@drawable/ic_email"
                 android:drawablePadding="16dp"
                 android:hint="@string/email_address"
@@ -43,7 +41,7 @@
                 android:id="@+id/edt_password"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@drawable/shape"
+                android:background="@drawable/border"
                 android:drawableStart="@drawable/ic_password"
                 android:drawablePadding="16dp"
                 android:hint="@string/password"
@@ -58,71 +56,83 @@
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
-    <EditText
-        android:id="@+id/btn_facebook"
-        android:layout_width="280dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/shape"
-        android:drawablePadding="16dp"
-        android:drawableStart="@drawable/ic_facebook"
-        android:focusable="false"
-        android:paddingStart="40dp"
-        android:text="@string/login_fb"
-        android:textColor="@color/darkBlue"
-        android:textSize="@dimen/normalText"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btSignIn" />
-
-    <Button
-        android:id="@+id/btn_email"
-        android:layout_width="280dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/shape"
-        android:drawableStart="@drawable/ic_email"
-        android:drawablePadding="16dp"
-        android:focusable="false"
-        android:paddingStart="40dp"
-        android:text="@string/login_email"
-        android:textColor="@color/darkBlue"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_facebook" />
-
     <TextView
         android:id="@+id/tv_forgotPW"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/forgotPW"
-        android:textColor="@color/white"
         android:textSize="@dimen/normalText"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_email" />
+        app:layout_constraintTop_toBottomOf="@+id/card_view" />
 
     <Button
         android:id="@+id/btSignIn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="sign in"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/shape_button"
+        android:text="@string/sign_up"
+        android:textStyle="bold"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_view" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_forgotPW" />
+
+    <View
+        android:layout_width="100dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="26dp"
+        android:background="#000000"
+        app:layout_constraintEnd_toStartOf="@+id/textView3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btSignIn" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/or"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btSignIn" />
+
+    <View
+        android:layout_width="100dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="60dp"
+        android:background="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/btSignIn" />
+
+    <Button
+        android:id="@+id/btn_facebook"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/ic_facebooktwo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <Button
+        android:id="@+id/btn_email"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="112dp"
+        android:background="@drawable/ic_gmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
     <ProgressBar
         android:id="@+id/loadSignIn"
         android:layout_width="wrap_content"
@@ -132,4 +142,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
 </android.support.constraint.ConstraintLayout>

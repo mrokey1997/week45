@@ -8,11 +8,13 @@ import com.google.firebase.database.FirebaseDatabase
 class ForgotPasswordPresenter(internal var view: ForgotPasswordContract.View): ForgotPasswordContract.Presenter{
     var myRef: DatabaseReference? = null
     var mAuth: FirebaseAuth? = null
+
     init {
         view.setPresenter(this)
         mAuth = FirebaseAuth.getInstance()
         myRef= FirebaseDatabase.getInstance().reference
     }
+
     override fun checkMail(email: String) {
         var message: String
         if (!TextUtils.isEmpty(email)) {

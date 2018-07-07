@@ -10,23 +10,37 @@ import android.widget.Button
 import android.widget.Toast
 import com.example.mrokey.besttrip.R
 import com.example.mrokey.besttrip.home.HomeActivity
+import com.facebook.CallbackManager
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.*
 import com.google.android.gms.common.api.GoogleApiClient
+import java.util.*
 
 /**
  * TOKEN: google API key
  */
-class SignInFragment: Fragment(),SignInContract.View{
+class SignInFragment: Fragment(), SignInContract.View {
+
     private var presenter: SignInContract.Presenter? = null
     private val TOKEN = "AIzaSyD94xpi7A-bpeNtLuz5gZLNjuJ74LmNtVA"
     val GOOGLE_SIGN_IN_REQUEST_CODE = 1
     lateinit var mGoogleApiClient: GoogleApiClient
     private var mGoogleSignInClient: GoogleSignInClient? = null
+
+    //Facebook
+    lateinit var mCallbackManager: CallbackManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = SignInPresenter(this)
+
+        //Facebook
+        mCallbackManager = CallbackManager.Factory.create()
+
+        presenter = SignInPresenter(this, mCallbackManager)
+
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -36,10 +50,15 @@ class SignInFragment: Fragment(),SignInContract.View{
                 .build()
         mGoogleApiClient.connect()
     }
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_sign_in,container, false)
+
         val btSignIn = view.findViewById(R.id.btSignIn) as Button
         val btEmail = view.findViewById(R.id.btn_email) as Button
+        val btFacebook = view.findViewById(R.id.btn_facebook) as Button
+
         btSignIn.setOnClickListener {
             getAccount()
         }
@@ -47,11 +66,18 @@ class SignInFragment: Fragment(),SignInContract.View{
             initGoogleSignIn()
             signInWithGoogleSignIn()
         }
+        btFacebook.setOnClickListener {
+            presenter?.authWithFacebook()
+            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"))
+        }
+
         return view
     }
+
     override fun setPresenter(presenter: SignInContract.Presenter) {
         this.presenter = presenter
     }
+
     override fun showLoading(isShow: Boolean) {
         loadSignIn.visibility = if (isShow) View.VISIBLE else View.GONE
     }
@@ -59,18 +85,21 @@ class SignInFragment: Fragment(),SignInContract.View{
     override fun showError(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
+
     //sign in with email and password
     override fun getAccount() {
         val email = edt_email?.text.toString()
         val password = edt_password?.text.toString()
-        presenter?.checkAccount(email,password)
+        presenter?.checkAccount(email, password)
     }
+
     // logic success
     override fun getSuccess(){
         val intent = Intent(context, HomeActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
+
     //Sign in with google
     private fun initGoogleSignIn() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -96,5 +125,13 @@ class SignInFragment: Fragment(),SignInContract.View{
                 presenter?.authWithGoogle(account!!)
             }
         }
+
+        //Facebook
+        mCallbackManager.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onSuccessLoginFacebook(result: LoginResult?) {
+        Toast.makeText(context, "Login Success", Toast.LENGTH_LONG).show()
+        startActivity(Intent(activity, HomeActivity::class.java))
     }
 }

@@ -2,6 +2,7 @@ package com.example.mrokey.besttrip.features.authentication.forgot
 
 
 interface ForgotPasswordContract {
+
     interface View {
         fun setPresenter(presenter: Presenter)
 
@@ -10,11 +11,9 @@ interface ForgotPasswordContract {
         fun showAnnounce(message: String)
 
         fun getMail()
-
-
     }
+
     interface Presenter{
         fun checkMail(email:String)
-
     }
 }

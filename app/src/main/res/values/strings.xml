@@ -6,6 +6,10 @@
     <string name="nav_header_subtitle">LeXuanChinh1507@gmail.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+
+    <!--
+      - Baron
+      -->
     <string name="slogan">Best trip with us</string>
     <string name="email_address">Email address</string>
     <string name="password">Password</string>
@@ -14,4 +18,12 @@
     <string name="forgotPW">Forgot password?</string>
     <string name="username">Username</string>
     <string name="action_sign_in_short">Sign in</string>
+    <string name="facebook_app_id">1634191810023009</string>
+    <string name="fb_login_protocol_scheme">fb1634191810023009</string>
+    <string name="login">Login</string>
+    <string name="or">Or</string>
+    <string name="sign_up">Sign up</string>
+
+
+
 </resources>
