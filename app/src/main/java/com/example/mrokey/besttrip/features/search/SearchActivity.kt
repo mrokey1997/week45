@@ -1,7 +1,6 @@
 package com.example.mrokey.besttrip.features.search
 
 import android.Manifest
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Criteria
@@ -18,7 +17,6 @@ import android.widget.Toast
 import com.example.mrokey.besttrip.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng

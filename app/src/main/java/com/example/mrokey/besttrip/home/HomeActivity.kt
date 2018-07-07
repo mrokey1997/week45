@@ -10,14 +10,16 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.mrokey.besttrip.R
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
+    var mAuth: FirebaseAuth? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        mAuth = FirebaseAuth.getInstance()
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
@@ -66,7 +68,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Toast.makeText(this@HomeActivity, "taxi", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_logout -> {
+                mAuth?.signOut()
                 Toast.makeText(this@HomeActivity, "logout", Toast.LENGTH_SHORT).show()
+
             }
             R.id.nav_share -> {
                 Toast.makeText(this@HomeActivity, "share", Toast.LENGTH_SHORT).show()

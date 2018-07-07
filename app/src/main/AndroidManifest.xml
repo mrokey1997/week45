@@ -16,16 +16,17 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAM6hZm5eW11iNqdcUS4VNNbO-A1wsyZus" />
 
-        <activity android:name=".welcome.WelcomeActivity"></activity>
-        <activity android:name=".features.search.SearchActivity">
+        <activity android:name=".welcome.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".features.search.SearchActivity" />
         <activity android:name=".features.authentication.forgot.ForgotPasswordActivity" />
-        <activity android:name=".home.HomeActivity"></activity>
+        <activity android:name=".home.HomeActivity" />
+        <activity android:name=".features.authentication.AuthenticationActivity" />
     </application>
 
 </manifest>
