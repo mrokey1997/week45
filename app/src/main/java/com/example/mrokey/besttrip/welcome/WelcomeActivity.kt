@@ -6,21 +6,21 @@ import android.content.Intent
 import android.util.Log
 import com.example.mrokey.besttrip.home.HomeActivity
 import com.example.mrokey.besttrip.R
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+//import com.google.firebase.database.DatabaseReference
+//import com.google.firebase.database.FirebaseDatabase
 
 
 
 
 class WelcomeActivity : AppCompatActivity() {
-    var database = FirebaseDatabase.getInstance()
-    var myRef = database.getReference()
-    var dataRef = myRef.child("trip")
+   // var database = FirebaseDatabase.getInstance()
+  //  var myRef = database.getReference()
+  //  var dataRef = myRef.child("trip")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
-        myRef.push().setValue("1")
-        supportActionBar?.hide()
+//        myRef.push().setValue("1")
+//        supportActionBar?.hide()
 //        txtStart.setOnClickListener {
 //            var intent = Intent(this, HomeActivity::class.java)
 //           startActivity(intent)
