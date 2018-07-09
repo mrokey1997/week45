@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import com.example.mrokey.besttrip.R
+import com.example.mrokey.besttrip.features.search.SearchActivity
 import com.example.mrokey.besttrip.home.HomeActivity
 import com.facebook.CallbackManager
 import com.facebook.login.LoginManager
