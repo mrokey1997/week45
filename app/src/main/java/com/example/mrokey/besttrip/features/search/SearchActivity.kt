@@ -2,6 +2,7 @@ package com.example.mrokey.besttrip.features.search
 
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.Toast
 import com.example.mrokey.besttrip.R
+import com.example.mrokey.besttrip.features.direction.DirectionActivity
 import com.example.mrokey.besttrip.model.Example
 import com.example.mrokey.besttrip.model.RetrofitMaps
 import com.google.android.gms.common.api.Status
@@ -22,6 +24,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import kotlinx.android.synthetic.main.activity_search.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,7 +33,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.ArrayList
 
 class SearchActivity : AppCompatActivity(),OnMapReadyCallback ,SearchContract.View {
-     lateinit var origin: LatLng
+
+    lateinit var origin: LatLng
      lateinit var dest: LatLng
      lateinit var MarkerPoints: ArrayList<LatLng>
      lateinit var btnDriving: Button
@@ -63,12 +67,14 @@ class SearchActivity : AppCompatActivity(),OnMapReadyCallback ,SearchContract.Vi
             }
         })
         btnDriving.setOnClickListener(View.OnClickListener {
-            build_retrofit_and_get_response("driving")
+            presenter.getDataFromMap( origin.latitude.toString(), origin.longitude.toString(), dest.latitude.toString() ,dest.longitude.toString(), "driving")
         })
         btnWalking.setOnClickListener(View.OnClickListener {
-            build_retrofit_and_get_response("walking")
+            presenter.getDataFromMap( origin.latitude.toString() , origin.longitude.toString(), dest.latitude.toString() , dest.longitude.toString(), "walking")
         })
-
+        ic_direction.setOnClickListener(View.OnClickListener {
+            startActivity(Intent(this,DirectionActivity::class.java))
+        })
     }
     override fun setPresenter(presenter: SearchContract.Presenter) {
         this.presenter = presenter
@@ -122,90 +128,35 @@ class SearchActivity : AppCompatActivity(),OnMapReadyCallback ,SearchContract.Vi
         })
 
     }
-
-
-    private fun build_retrofit_and_get_response(type: String) {
-
-        val url = "https://maps.googleapis.com/maps/"
-
-        val retrofit = Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-
-        val service = retrofit.create<RetrofitMaps>(RetrofitMaps::class.java!!)
-
-        val call = service.getDistanceDuration("metric", origin.latitude.toString() + ", " + origin.longitude, dest.latitude.toString() + ", " + dest.longitude, type)
-        call.enqueue(object : Callback<Example> {
-            override fun onResponse(call: Call<Example>, response: Response<Example>) {
-                Log.d("abc", "t")
-                try {
-                    //Remove previous line from map
-                    if (line != null) {
-                        line!!.remove()
-                    }
-                    // This loop will go through all the results and add marker on each location.
-                    for (i in 0 until response.body()!!.getRoutes().size) {
-                        val distance = response.body()!!.getRoutes().get(i).getLegs().get(i).getDistance()!!.getText()
-                        val time = response.body()!!.getRoutes().get(i).getLegs().get(i).getDuration()!!.getText()
-                        Toast.makeText(this@SearchActivity, distance + time, Toast.LENGTH_SHORT).show()
-                        val encodedString = response.body()!!.getRoutes().get(0).getOverviewPolyline()!!.getPoints()
-                        val list = decodePoly(encodedString!!)
-                        line = map.addPolyline(PolylineOptions()
-                                .addAll(list)
-                                .width(8f)
-                                .color(Color.RED)
-                                .geodesic(true)
-                        )
-                    }
-                } catch (e: Exception) {
-                    Log.d("onResponse", "There is an error")
-                    e.printStackTrace()
+    override fun onGetStatusesSuccess(data: Response<Example>?) {
+        Log.d("abc", "t")
+        try {
+            //Remove previous line from map
+            if (line != null) {
+                line!!.remove()
+            }
+            // This loop will go through all the results and add marker on each location.
+            if (data != null) {
+                for (i in 0 until data.body()!!.getRoutes().size) {
+                    val distance = data.body()!!.getRoutes().get(i).getLegs().get(i).getDistance()!!.getText()
+                    val time = data.body()!!.getRoutes().get(i).getLegs().get(i).getDuration()!!.getText()
+                    Toast.makeText(this@SearchActivity, distance + time, Toast.LENGTH_SHORT).show()
+                    val encodedString = data.body()!!.getRoutes().get(0).getOverviewPolyline()!!.getPoints()
+                    val list = presenter.decodePoly(encodedString!!)
+                    line = map.addPolyline(PolylineOptions()
+                            .addAll(list)
+                            .width(8f)
+                            .color(Color.RED)
+                            .geodesic(true)
+                    )
                 }
-
             }
-
-            override fun onFailure(call: Call<Example>, t: Throwable) {
-                Log.d("abc", "f")
-            }
-        })
-
-    }
-
-    private fun decodePoly(encoded: String): List<LatLng> {
-        val poly = ArrayList<LatLng>()
-        var index = 0
-        val len = encoded.length
-        var lat = 0
-        var lng = 0
-
-        while (index < len) {
-            var b: Int
-            var shift = 0
-            var result = 0
-            do {
-                b = encoded[index++].toInt() - 63
-                result = result or (b and 0x1f shl shift)
-                shift += 5
-            } while (b >= 0x20)
-            val dlat = if (result and 1 != 0) (result shr 1).inv() else result shr 1
-            lat += dlat
-
-            shift = 0
-            result = 0
-            do {
-                b = encoded[index++].toInt() - 63
-                result = result or (b and 0x1f shl shift)
-                shift += 5
-            } while (b >= 0x20)
-            val dlng = if (result and 1 != 0) (result shr 1).inv() else result shr 1
-            lng += dlng
-
-            val p = LatLng(lat.toDouble() / 1E5,
-                    lng.toDouble() / 1E5)
-            poly.add(p)
+        } catch (e: Exception) {
+            Log.d("onResponse", "There is an error")
+            e.printStackTrace()
         }
 
-        return poly
     }
+
+
 }
