@@ -10,11 +10,10 @@ import com.example.mrokey.besttrip.entities.Taxi
 import com.example.mrokey.besttrip.R
 import kotlinx.android.synthetic.main.item_recommend.view.*
 
-class SeatsAdapter(val items : ArrayList<Taxi>, val context: Context) : RecyclerView.Adapter<SeatsAdapter.ViewHolder>() {
-
+class SeatsAdapter(val size: Int, val items : ArrayList<Taxi>, val context: Context) : RecyclerView.Adapter<SeatsAdapter.ViewHolder>() {
     // Gets the number of animals in the list
     override fun getItemCount(): Int {
-        return items.size
+        return size
     }
 
     // Inflates the item views
