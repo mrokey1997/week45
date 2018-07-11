@@ -14,7 +14,7 @@ interface SearchContract {
     }
     interface Presenter{
         fun decodePoly(encoded: String): List<LatLng>
-       fun enableMyLocation(map: GoogleMap ,mContext: Context )
+        fun enableMyLocation(map: GoogleMap ,mContext: Context )
         fun isGPSEnabled(mContext: Context): Boolean
         fun getDataFromMap(start_latitude:String,start_longitude:String,end_latitude:String,end_longitude:String,type:String)
     }

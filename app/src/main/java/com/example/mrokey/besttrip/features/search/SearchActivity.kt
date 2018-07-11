@@ -13,6 +13,7 @@ import android.widget.CheckBox
 import android.widget.Toast
 import com.example.mrokey.besttrip.R
 import com.example.mrokey.besttrip.features.direction.DirectionActivity
+import com.example.mrokey.besttrip.home.HomeActivity
 import com.example.mrokey.besttrip.model.Example
 import com.example.mrokey.besttrip.model.RetrofitMaps
 import com.google.android.gms.common.api.Status
@@ -35,11 +36,13 @@ import java.util.ArrayList
 class SearchActivity : AppCompatActivity(),OnMapReadyCallback ,SearchContract.View {
 
     lateinit var origin: LatLng
-     lateinit var dest: LatLng
-     lateinit var MarkerPoints: ArrayList<LatLng>
-     lateinit var btnDriving: Button
-     lateinit var btnWalking: Button
-     var line: Polyline? = null
+    lateinit var dest: LatLng
+    lateinit var MarkerPoints: ArrayList<LatLng>
+    lateinit var markerpoint: ArrayList<LatLng>
+    lateinit var btnDriving: Button
+    lateinit var btnWalking: Button
+    var line: Polyline? = null
+    var type:String?=null
     private lateinit var map: GoogleMap
     private lateinit var myLocationCheckbox: CheckBox
     private lateinit var presenter: SearchContract.Presenter
@@ -50,7 +53,19 @@ class SearchActivity : AppCompatActivity(),OnMapReadyCallback ,SearchContract.Vi
         btnWalking=findViewById(R.id.btnWalking)
         btnDriving=findViewById(R.id.btnDriving)
         MarkerPoints = ArrayList()
+        markerpoint= ArrayList()
         myLocationCheckbox = findViewById(R.id.myLocationCheckbox)
+
+        val bundle = intent.extras
+        if(bundle!=null){
+            type=bundle.getString("type")
+        }
+        if(type!=null){
+//           var start_latitude:Double=bundle.getDouble("start_latitude")
+            markerpoint.add(LatLng(bundle.getDouble("start_latitude"),bundle.getDouble("start_longitude")))
+            markerpoint.add(LatLng(bundle.getDouble("end_latitude"),bundle.getDouble("end_longitude")))
+        }
+        Log.d("intent","nnn")
         val mapFragment : SupportMapFragment?=supportFragmentManager.findFragmentById(R.id.map)
                 as? SupportMapFragment
         mapFragment?.getMapAsync(this)
@@ -75,6 +90,7 @@ class SearchActivity : AppCompatActivity(),OnMapReadyCallback ,SearchContract.Vi
         ic_direction.setOnClickListener(View.OnClickListener {
             startActivity(Intent(this,DirectionActivity::class.java))
         })
+
     }
     override fun setPresenter(presenter: SearchContract.Presenter) {
         this.presenter = presenter
@@ -88,19 +104,32 @@ class SearchActivity : AppCompatActivity(),OnMapReadyCallback ,SearchContract.Vi
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap?) {
         map = googleMap ?: return
-        val sydney = LatLng(10.835307, 106.687726)
-        map.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        map.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-        map.animateCamera(CameraUpdateFactory.zoomTo(11f))
+//        val sydney = LatLng(10.835307, 106.687726)
+//        map.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+//        map.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+//        map.animateCamera(CameraUpdateFactory.zoomTo(11f))
         if (myLocationCheckbox.isChecked) presenter.enableMyLocation(map,this)
         myLocationCheckbox.setOnClickListener {
             if (!myLocationCheckbox.isChecked) {
                 map.isMyLocationEnabled = false
             } else {
+                map.clear()
                 presenter.enableMyLocation(map,this)
             }
         }
+        if(markerpoint.size>0){
+            map.clear()
+            //Setting the piosition of the marker
+            map.addMarker(MarkerOptions().position(markerpoint.get(0)).title("a"))
+            map.addMarker(MarkerOptions().position(markerpoint.get(1)).title("b"))
+            map.moveCamera(CameraUpdateFactory.newLatLng(markerpoint.get(0)))
+            map.animateCamera(CameraUpdateFactory.zoomTo(15f))
+            presenter.getDataFromMap(markerpoint.get(0).latitude.toString(),markerpoint.get(0).longitude.toString(),
+                    markerpoint.get(1).latitude.toString(),  markerpoint.get(1).longitude.toString(),type!!)
+            //Add new marker to the Google Map Android API V2
 
+            //Checks ,whether start and end locations are captured
+        }
         map.setOnMapClickListener(GoogleMap.OnMapClickListener { point ->
             if (MarkerPoints.size > 1) {
                 map.clear()
@@ -157,6 +186,4 @@ class SearchActivity : AppCompatActivity(),OnMapReadyCallback ,SearchContract.Vi
         }
 
     }
-
-
 }
