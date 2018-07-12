@@ -7,5 +7,6 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="big_title">40sp</dimen>
     <dimen name="normalText">16sp</dimen>
-    <dimen name="marginEditText">16dp</dimen>
+    <dimen name="marginEditText">24dp</dimen>
+    <dimen name="heightEditText">45dp</dimen>
 </resources>

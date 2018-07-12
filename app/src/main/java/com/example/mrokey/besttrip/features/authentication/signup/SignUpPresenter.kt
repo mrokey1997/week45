@@ -16,6 +16,7 @@ class SignUpPresenter(internal var view: SignUpContract.View) : SignUpContract.P
         mAuth = FirebaseAuth.getInstance()
         myRef= FirebaseDatabase.getInstance().reference
     }
+
     override fun checkAccount(name:String, email: String, password: String) {
         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
             view.showLoading(true)

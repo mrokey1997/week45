@@ -3,7 +3,7 @@ package com.example.mrokey.besttrip.features.authentication
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.example.mrokey.besttrip.R
-import com.example.mrokey.besttrip.features.authentication.adapter.ViewPagerAdapter
+import com.example.mrokey.besttrip.adapter.ViewPagerAdapter
 import com.example.mrokey.besttrip.features.authentication.signin.SignInFragment
 import com.example.mrokey.besttrip.features.authentication.signup.SignUpFragment
 import kotlinx.android.synthetic.main.activity_authentication.*

@@ -15,13 +15,21 @@
       },
       "oauth_client": [
         {
+          "client_id": "899707323390-f3572c0hqi7oa7oa9n8r1te6eb2huogh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mrokey.besttrip",
+            "certificate_hash": "c4f51a8a3bf2a09bfac13b465783a28b028dc17d"
+          }
+        },
+        {
           "client_id": "899707323390-t8bjp7791dlinj5634olv4rvv4r213sv.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDqikTWefazxQ9xMhBfDIYLOzK0vPkGCyo"
+          "current_key": "AIzaSyDQNLa65vQw6synB4Hn13kL4HMaRULV1p8"
         }
       ],
       "services": {
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "899707323390-t8bjp7791dlinj5634olv4rvv4r213sv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

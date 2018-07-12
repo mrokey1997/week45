@@ -7,37 +7,53 @@
     tools:context=".home.HomeActivity">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbarHome"
+        android:id="@+id/toolbarMenu"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#f07cf5"
+        android:background="@drawable/backgroundi"
         app:layout_constraintHeight_percent="0.35"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/slackey"
         android:text="@string/app_name"
-        android:textSize="40sp"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.094" />
+        app:layout_constraintVertical_bias="0.058"/>
     <TextView
         android:id="@+id/tv_slogan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/slogan"
+        android:fontFamily="@font/slackey"
         android:textSize="16sp"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"/>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:background="@color/white"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintDimensionRatio="H,1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/toolbarMenu"
+        app:layout_constraintWidth_percent="0.34"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -48,7 +64,7 @@
         app:layout_constraintDimensionRatio="H,1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/toolbarHome"
+        app:layout_constraintTop_toTopOf="@id/toolbarMenu"
         app:layout_constraintWidth_percent="0.33"
         tools:ignore="ContentDescription" />
 
@@ -92,7 +108,7 @@
         tools:ignore="HardcodedText" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnWhere"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -108,5 +124,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtStatus"
         tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_dialog_email" />
 
 </android.support.constraint.ConstraintLayout>

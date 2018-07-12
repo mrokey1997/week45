@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BestTrip</string>
+    <string name="app_name">Together We Go</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Lê Xuân Chính</string>
@@ -10,7 +10,7 @@
     <!--
       - Baron
       -->
-    <string name="slogan">Best trip with us</string>
+    <string name="slogan">Book and enjoy with us</string>
     <string name="email_address">Email address</string>
     <string name="password">Password</string>
     <string name="login_fb">Login with Facebook</string>
@@ -23,7 +23,12 @@
     <string name="login">Login</string>
     <string name="or">Or</string>
     <string name="sign_up">Sign up</string>
-
+    <string name="name">Name</string>
+    <string name="phone">Phone</string>
+    <string name="empty">empty</string>
+    <string name="search">Search</string>
+    <string name="search_hint">Name or phone number</string>
+    <string name="sign_in">Sign in</string>
 
 
 </resources>

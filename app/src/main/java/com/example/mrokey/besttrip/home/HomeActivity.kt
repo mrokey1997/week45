@@ -1,5 +1,6 @@
 package com.example.mrokey.besttrip.home
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -10,15 +11,17 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.mrokey.besttrip.R
+import com.example.mrokey.besttrip.company.CompanyActivity
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.content_home.*
 
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     var mAuth: FirebaseAuth? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
         mAuth = FirebaseAuth.getInstance()
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -30,6 +33,10 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this)
+
+        btnWhere.setOnClickListener {
+            startActivity(Intent(this, CompanyActivity::class.java))
+        }
     }
 
     override fun onBackPressed() {
@@ -45,6 +52,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -54,6 +62,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             else -> super.onOptionsItemSelected(item)
         }
     }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
@@ -70,7 +79,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_logout -> {
                 mAuth?.signOut()
                 Toast.makeText(this@HomeActivity, "logout", Toast.LENGTH_SHORT).show()
-
             }
             R.id.nav_share -> {
                 Toast.makeText(this@HomeActivity, "share", Toast.LENGTH_SHORT).show()
@@ -79,7 +87,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Toast.makeText(this@HomeActivity, "send", Toast.LENGTH_SHORT).show()
             }
         }
-
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
