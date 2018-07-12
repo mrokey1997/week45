@@ -3,6 +3,7 @@ package com.example.mrokey.besttrip.features.authentication.signin
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,15 +21,20 @@ import com.google.android.gms.auth.api.signin.*
 import com.google.android.gms.common.api.GoogleApiClient
 import java.util.*
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.ConnectionResult
+import com.google.firebase.auth.FirebaseAuth
 
 
 
-class SignInFragment: Fragment(), SignInContract.View {
+
+
+class SignInFragment: Fragment(), SignInContract.View, GoogleApiClient.OnConnectionFailedListener {
 
     private var presenter: SignInContract.Presenter? = null
     private val GOOGLE_SIGN_IN_REQUEST_CODE = 1
-    private var mGoogleSignInClient: GoogleSignInClient? = null
     private var mGoogleApiClient: GoogleApiClient? = null
+    private var mFirebaseAuth: FirebaseAuth? = null
+
     //Facebook
     private lateinit var mCallbackManager: CallbackManager
 
@@ -96,21 +102,14 @@ class SignInFragment: Fragment(), SignInContract.View {
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build()
-        mGoogleSignInClient = GoogleSignIn.getClient(context!!, gso)
-    }
-    private fun signInWithGoogleSignIn() {
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build()
-
-        val mGoogleApiClient = GoogleApiClient.Builder(activity!!)
+        mGoogleApiClient = GoogleApiClient.Builder(context!!)
+                .enableAutoManage(activity!! /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build()
-        mGoogleApiClient.connect()
-        //val signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient)
-        mGoogleSignInClient = GoogleSignIn.getClient(context!!, gso)
-        val signInIntent = mGoogleSignInClient?.signInIntent
+        mFirebaseAuth = FirebaseAuth.getInstance()
+    }
+    private fun signInWithGoogleSignIn() {
+        val signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient)
         startActivityForResult(signInIntent, GOOGLE_SIGN_IN_REQUEST_CODE)
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -128,5 +127,8 @@ class SignInFragment: Fragment(), SignInContract.View {
     override fun onSuccessLoginFacebook(result: LoginResult?) {
         Toast.makeText(context, "Login Success", Toast.LENGTH_LONG).show()
         startActivity(Intent(activity, HomeActivity::class.java))
+    }
+    override fun onConnectionFailed(p0: ConnectionResult) {
+        Toast.makeText(context, "Google Play Services error.", Toast.LENGTH_SHORT).show()
     }
 }
