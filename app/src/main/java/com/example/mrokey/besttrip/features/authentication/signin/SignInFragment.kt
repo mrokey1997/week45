@@ -66,11 +66,6 @@ class SignInFragment: Fragment(), SignInContract.View, GoogleApiClient.OnConnect
         }
         return view
     }
-
-    override fun onResume() {
-        super.onResume()
-        presenter?.checkCurrentUser()
-    }
     override fun setPresenter(presenter: SignInContract.Presenter) {
         this.presenter = presenter
     }

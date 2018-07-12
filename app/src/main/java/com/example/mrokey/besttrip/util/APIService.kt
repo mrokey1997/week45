@@ -1,4 +1,4 @@
-package com.example.mrokey.besttrip.until
+package com.example.mrokey.besttrip.util
 
 import com.example.mrokey.besttrip.model.RetrofitMaps
 import okhttp3.OkHttpClient

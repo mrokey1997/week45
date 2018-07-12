@@ -4,4 +4,4 @@ data class Taxi(
         val company: String,
         val nameCar: String,
         val phone: String,
-        val price: Float)
+        val price: String)

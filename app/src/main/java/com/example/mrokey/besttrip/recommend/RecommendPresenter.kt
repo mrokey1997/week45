@@ -2,6 +2,7 @@ package com.example.mrokey.besttrip.recommend
 
 import android.util.Log
 import com.example.mrokey.besttrip.entities.Taxi
+import com.example.mrokey.besttrip.util.PriceFormat
 import com.google.firebase.database.*
 
 class RecommendPresenter(internal var view: RecommendContract.View): RecommendContract.Presenter{
@@ -24,20 +25,32 @@ class RecommendPresenter(internal var view: RecommendContract.View): RecommendCo
                 var i = 0
                 while (i < dataSnapshot.childrenCount)
                 {
-                    Log.d("AAA",Thread.currentThread().name)
                     val phone = dataSnapshot.child(i.toString()).child("phone").value.toString()
                     val company = dataSnapshot.child(i.toString()).child("name").value.toString()
                     val child = dataSnapshot.child(i.toString()).child("vehicle")
                     var j = 0
                     while(j<child.childrenCount) {
                         val name = child.child(j.toString()).child("name").value.toString()
-                        val unitPrice =  child.child(j.toString()).child("over_1km").value.toString()
-                        val price = unitPrice.toFloat()*2
+                        val price1km =  child.child(j.toString()).child("_1km").value.toString()
+                        val priceOver1km =  child.child(j.toString()).child("over_1km").value.toString()
+                        val priceOver30km =  child.child(j.toString()).child("over_30km").value.toString()
+                        var price = 0F
+                        var FAR = 100F
+                        if(FAR > 30.0) {
+                            price += ((FAR - 30.0) * priceOver30km.toFloat()).toFloat()
+                            FAR = 30F
+                        }
+                        if (FAR > 1) {
+                            price += ((FAR - 1) * priceOver1km.toFloat())
+                            FAR = 1F
+                        }
+                        if( FAR > 0) price += FAR * price1km.toFloat()
+                        val priceFormat = PriceFormat.priceFormat(price.toInt()) + ".000 VND"
                         when (child.child(j.toString()).child("number_seat").value.toString()) {
-                            "4" -> taxiFourSeats.add(Taxi(company, name, phone, price))
-                            "5" -> taxiFiveSeats.add(Taxi(company, name, phone, price))
-                            "7" -> taxiSevenSeats.add(Taxi(company, name, phone, price))
-                            "8" -> taxiEightSeats.add(Taxi(company, name, phone, price))
+                            "4" -> taxiFourSeats.add(Taxi(company, name, phone, priceFormat))
+                            "5" -> taxiFiveSeats.add(Taxi(company, name, phone, priceFormat))
+                            "7" -> taxiSevenSeats.add(Taxi(company, name, phone, priceFormat))
+                            "8" -> taxiEightSeats.add(Taxi(company, name, phone, priceFormat))
                         }
                         j += 1
                     }

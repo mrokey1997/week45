@@ -25,10 +25,6 @@ class SignInPresenter(internal var view: SignInContract.View, val callbackManage
         myRef= FirebaseDatabase.getInstance().reference
     }
 
-    override fun checkCurrentUser() {
-        if(mAuth?.currentUser!=null)
-            view.getSuccess()
-    }
     override fun checkAccount(email: String, password: String) {
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
             view.showLoading(true)

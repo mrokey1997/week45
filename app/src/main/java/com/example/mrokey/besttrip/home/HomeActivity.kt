@@ -17,6 +17,9 @@ import com.example.mrokey.besttrip.features.search.SearchActivity
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.content_home.*
+import com.google.android.gms.auth.api.Auth
+
+
 
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     var mAuth: FirebaseAuth? = null
