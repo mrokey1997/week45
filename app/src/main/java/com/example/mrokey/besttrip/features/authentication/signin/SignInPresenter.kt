@@ -63,10 +63,14 @@ class SignInPresenter(internal var view: SignInContract.View, val callbackManage
                         message = "success AuthWithGoogle"
                         view.showError(message)
                         val userId = mAuth?.currentUser!!.uid
+                        val email = mAuth?.currentUser!!.email
                         val name = mAuth?.currentUser!!.displayName
+                        val url = mAuth?.currentUser!!.photoUrl
                         val currentUserDb = myRef?.child("trip")?.child("user")?.child(userId)
                         currentUserDb?.child("name")?.setValue(name)
+                        currentUserDb?.child("email")?.setValue(email)
                         currentUserDb?.child("uid")?.setValue(userId)
+                        currentUserDb?.child("url")?.setValue(url)
                     } else {
                         message = "fail AuthWithGoogle"
                         view.showError(message)

@@ -19,15 +19,16 @@ import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.*
 import com.google.android.gms.common.api.GoogleApiClient
 import java.util.*
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
-/**
- * TOKEN: google API key
- */
+
+
 class SignInFragment: Fragment(), SignInContract.View {
 
     private var presenter: SignInContract.Presenter? = null
     private val GOOGLE_SIGN_IN_REQUEST_CODE = 1
     private var mGoogleSignInClient: GoogleSignInClient? = null
+    private var mGoogleApiClient: GoogleApiClient? = null
     //Facebook
     private lateinit var mCallbackManager: CallbackManager
 
@@ -57,7 +58,6 @@ class SignInFragment: Fragment(), SignInContract.View {
             presenter?.authWithFacebook()
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"))
         }
-
         return view
     }
 
@@ -99,11 +99,20 @@ class SignInFragment: Fragment(), SignInContract.View {
         mGoogleSignInClient = GoogleSignIn.getClient(context!!, gso)
     }
     private fun signInWithGoogleSignIn() {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build()
+
+        val mGoogleApiClient = GoogleApiClient.Builder(activity!!)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build()
+        mGoogleApiClient.connect()
         //val signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient)
+        mGoogleSignInClient = GoogleSignIn.getClient(context!!, gso)
         val signInIntent = mGoogleSignInClient?.signInIntent
         startActivityForResult(signInIntent, GOOGLE_SIGN_IN_REQUEST_CODE)
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == GOOGLE_SIGN_IN_REQUEST_CODE) {
