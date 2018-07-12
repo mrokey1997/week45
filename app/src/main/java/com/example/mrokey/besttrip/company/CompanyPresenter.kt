@@ -2,6 +2,7 @@ package com.example.mrokey.besttrip.company
 
 import com.example.mrokey.besttrip.entities.Company
 import com.example.mrokey.besttrip.entities.Taxi
+import com.example.mrokey.besttrip.entities.Vehicle
 import com.google.firebase.database.*
 
 class CompanyPresenter(internal var view: CompanyContract.View) : CompanyContract.Presenter {
@@ -22,11 +23,11 @@ class CompanyPresenter(internal var view: CompanyContract.View) : CompanyContrac
 
                 for (i in 0 until size) {
                     val child = dataSnapshot.child(i.toString())
-                    var listTaxi = ArrayList<Taxi>()
+                    var listTaxi = ArrayList<Vehicle>()
 
                     for (j in 0 until child.child("vehicle").childrenCount) {
                         val vehicleChild = child.child("vehicle").child("0")
-                        listTaxi.add(Taxi(
+                        listTaxi.add(Vehicle(
                                 vehicleChild.child("name").value.toString(),
                                 vehicleChild.child("number_seat").value as Long,
                                 vehicleChild.child("_1km").value as Long,

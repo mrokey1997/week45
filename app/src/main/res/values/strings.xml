@@ -29,6 +29,8 @@
     <string name="search">Search</string>
     <string name="search_hint">Name or phone number</string>
     <string name="sign_in">Sign in</string>
-
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Driving</string>
+    <string name="title_dashboard">Walking</string>
 
 </resources>

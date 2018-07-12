@@ -4,10 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
 import com.example.mrokey.besttrip.R
-import com.example.mrokey.besttrip.features.authentication.AuthenticationActivity
-
-
-
+import com.example.mrokey.besttrip.features.search.SearchActivity
 
 
 class WelcomeActivity : AppCompatActivity() {
@@ -20,7 +17,7 @@ class WelcomeActivity : AppCompatActivity() {
             } catch (e: Exception) {
 
             } finally {
-                startActivity(Intent(this, AuthenticationActivity::class.java))
+                startActivity(Intent(this, SearchActivity::class.java))
             }
         })
         thread.start()

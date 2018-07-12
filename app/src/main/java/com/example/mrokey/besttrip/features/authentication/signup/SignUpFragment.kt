@@ -44,7 +44,3 @@ class SignUpFragment: Fragment(),SignUpContract.View {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }
-
-
-
-

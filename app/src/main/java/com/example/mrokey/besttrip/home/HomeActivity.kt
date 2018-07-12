@@ -12,6 +12,8 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.example.mrokey.besttrip.R
 import com.example.mrokey.besttrip.company.CompanyActivity
+import com.example.mrokey.besttrip.features.authentication.AuthenticationActivity
+import com.example.mrokey.besttrip.features.search.SearchActivity
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.content_home.*
@@ -27,7 +29,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
-
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbarMenu, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
@@ -35,10 +36,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
 
         btnWhere.setOnClickListener {
-            startActivity(Intent(this, CompanyActivity::class.java))
+            startActivity(Intent(this, SearchActivity::class.java))
         }
     }
-
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
@@ -46,7 +46,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             super.onBackPressed()
         }
     }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
@@ -78,7 +77,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_logout -> {
                 mAuth?.signOut()
+                startActivity(Intent(this, AuthenticationActivity::class.java))
                 Toast.makeText(this@HomeActivity, "logout", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@HomeActivity, mAuth?.currentUser.toString(), Toast.LENGTH_SHORT).show()
             }
             R.id.nav_share -> {
                 Toast.makeText(this@HomeActivity, "share", Toast.LENGTH_SHORT).show()
