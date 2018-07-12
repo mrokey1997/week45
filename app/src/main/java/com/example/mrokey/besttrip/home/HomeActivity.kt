@@ -24,14 +24,12 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
-
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbarMenu, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this)
     }
-
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
@@ -39,7 +37,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             super.onBackPressed()
         }
     }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
@@ -69,7 +66,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_logout -> {
                 mAuth?.signOut()
-                Toast.makeText(this@HomeActivity, "logout", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@HomeActivity, mAuth?.currentUser.toString(), Toast.LENGTH_SHORT).show()
 
             }
             R.id.nav_share -> {
@@ -79,7 +76,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Toast.makeText(this@HomeActivity, "send", Toast.LENGTH_SHORT).show()
             }
         }
-
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }

@@ -6,7 +6,6 @@ import android.util.Log
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
-import com.facebook.FacebookSdk
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.firebase.auth.FirebaseAuth
@@ -17,8 +16,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 
 class SignInPresenter(internal var view: SignInContract.View, val callbackManager: CallbackManager) : SignInContract.Presenter {
 
-    var myRef: DatabaseReference? = null
-    var mAuth: FirebaseAuth? = null
+    private var myRef: DatabaseReference? = null
+    private var mAuth: FirebaseAuth? = null
 
     init {
         view.setPresenter(this)
@@ -26,6 +25,10 @@ class SignInPresenter(internal var view: SignInContract.View, val callbackManage
         myRef= FirebaseDatabase.getInstance().reference
     }
 
+    override fun checkCurrentUser() {
+        if(mAuth?.currentUser!=null)
+            view.getSuccess()
+    }
     override fun checkAccount(email: String, password: String) {
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
             view.showLoading(true)
@@ -35,10 +38,10 @@ class SignInPresenter(internal var view: SignInContract.View, val callbackManage
                             // Sign in success, update UI with signed-in user's information
                             Log.d(ContentValues.TAG, "signInWithEmail:success")
                             view.showLoading(false)
-                            if(mAuth!!.currentUser!!.isEmailVerified)
-                                view.getSuccess()
-                            else
-                                view.showError("The account has not been verified.")
+                            //if(mAuth!!.currentUser!!.isEmailVerified)
+                            view.getSuccess()
+//                           else
+//                                view.showError("The account has not been verified.")
                         } else {
                             view.showLoading(false)
                             // If sign in fails, display a message to the user.
@@ -50,7 +53,6 @@ class SignInPresenter(internal var view: SignInContract.View, val callbackManage
             view.showError("Enter all details")
         }
     }
-
     //SignIn with Google mail
     override fun authWithGoogle(acct: GoogleSignInAccount) {
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
@@ -60,13 +62,17 @@ class SignInPresenter(internal var view: SignInContract.View, val callbackManage
                         view.getSuccess()
                         message = "success AuthWithGoogle"
                         view.showError(message)
+                        val userId = mAuth?.currentUser!!.uid
+                        val name = mAuth?.currentUser!!.displayName
+                        val currentUserDb = myRef?.child("trip")?.child("user")?.child(userId)
+                        currentUserDb?.child("name")?.setValue(name)
+                        currentUserDb?.child("uid")?.setValue(userId)
                     } else {
                         message = "fail AuthWithGoogle"
                         view.showError(message)
                     }
                 }
     }
-
     override fun authWithFacebook() {
         LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(result: LoginResult?) {

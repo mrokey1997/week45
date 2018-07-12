@@ -26,13 +26,10 @@ import java.util.*
 class SignInFragment: Fragment(), SignInContract.View {
 
     private var presenter: SignInContract.Presenter? = null
-    private val TOKEN = "AIzaSyD94xpi7A-bpeNtLuz5gZLNjuJ74LmNtVA"
-    val GOOGLE_SIGN_IN_REQUEST_CODE = 1
-    lateinit var mGoogleApiClient: GoogleApiClient
+    private val GOOGLE_SIGN_IN_REQUEST_CODE = 1
     private var mGoogleSignInClient: GoogleSignInClient? = null
-
     //Facebook
-    lateinit var mCallbackManager: CallbackManager
+    private lateinit var mCallbackManager: CallbackManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,18 +38,7 @@ class SignInFragment: Fragment(), SignInContract.View {
         mCallbackManager = CallbackManager.Factory.create()
 
         presenter = SignInPresenter(this, mCallbackManager)
-
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build()
-        mGoogleApiClient = GoogleApiClient.Builder(context!!)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build()
-        mGoogleApiClient.connect()
     }
-
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_sign_in,container, false)
 
@@ -75,6 +61,10 @@ class SignInFragment: Fragment(), SignInContract.View {
         return view
     }
 
+    override fun onResume() {
+        super.onResume()
+        presenter?.checkCurrentUser()
+    }
     override fun setPresenter(presenter: SignInContract.Presenter) {
         this.presenter = presenter
     }
@@ -100,20 +90,17 @@ class SignInFragment: Fragment(), SignInContract.View {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
-
     //Sign in with google
     private fun initGoogleSignIn() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(TOKEN)
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build()
-        mGoogleApiClient = GoogleApiClient.Builder(context!!).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build()
-        mGoogleApiClient.connect()
         mGoogleSignInClient = GoogleSignIn.getClient(context!!, gso)
     }
-
     private fun signInWithGoogleSignIn() {
-        val signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient)
+        //val signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient)
+        val signInIntent = mGoogleSignInClient?.signInIntent
         startActivityForResult(signInIntent, GOOGLE_SIGN_IN_REQUEST_CODE)
     }
 
@@ -126,11 +113,9 @@ class SignInFragment: Fragment(), SignInContract.View {
                 presenter?.authWithGoogle(account!!)
             }
         }
-
         //Facebook
         mCallbackManager.onActivityResult(requestCode, resultCode, data)
     }
-
     override fun onSuccessLoginFacebook(result: LoginResult?) {
         Toast.makeText(context, "Login Success", Toast.LENGTH_LONG).show()
         startActivity(Intent(activity, HomeActivity::class.java))
