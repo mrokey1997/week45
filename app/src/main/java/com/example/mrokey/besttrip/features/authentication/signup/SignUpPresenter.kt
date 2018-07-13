@@ -31,7 +31,7 @@ class SignUpPresenter(internal var view: SignUpContract.View) : SignUpContract.P
                         //Verify Email
                         //verifyEmail()
                         //update user profile information
-                        val currentUserDb = myRef?.child("trip")?.child("user")?.child(userId)
+                        val currentUserDb = myRef?.child("user")?.child(userId)
                         currentUserDb?.child("name")?.setValue(name)
                         currentUserDb?.child("email")?.setValue(email)
                         currentUserDb?.child("url")?.setValue(null)

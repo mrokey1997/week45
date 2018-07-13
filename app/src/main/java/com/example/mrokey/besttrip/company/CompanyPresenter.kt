@@ -1,7 +1,6 @@
 package com.example.mrokey.besttrip.company
 
 import com.example.mrokey.besttrip.entities.Company
-import com.example.mrokey.besttrip.entities.Taxi
 import com.example.mrokey.besttrip.entities.Vehicle
 import com.google.firebase.database.*
 
@@ -12,7 +11,7 @@ class CompanyPresenter(internal var view: CompanyContract.View) : CompanyContrac
 
     init {
         view.setPresenter(this)
-        mReference = FirebaseDatabase.getInstance().reference.child("trip").child("company")
+        mReference = FirebaseDatabase.getInstance().reference.child("company")
     }
 
     override fun getDatabase(listener: CompanyContract.View) {
@@ -32,10 +31,9 @@ class CompanyPresenter(internal var view: CompanyContract.View) : CompanyContrac
                                 vehicleChild.child("number_seat").value as Long,
                                 vehicleChild.child("_1km").value as Long,
                                 vehicleChild.child("over_1km").value as Double,
-                                vehicleChild.child("over_31km").value as Double
+                                vehicleChild.child("over_30km").value as Double
                         ))
                     }
-
                     listCompany.add(Company(
                             child.child("name").value.toString(),
                             child.child("address").value.toString(),

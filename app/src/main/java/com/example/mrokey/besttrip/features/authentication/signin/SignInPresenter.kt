@@ -25,6 +25,10 @@ class SignInPresenter(internal var view: SignInContract.View, val callbackManage
         myRef= FirebaseDatabase.getInstance().reference
     }
 
+    override fun getAccount() {
+        if(mAuth?.currentUser!=null)
+            view.getSuccess()
+    }
     override fun checkAccount(email: String, password: String) {
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
             view.showLoading(true)
@@ -62,7 +66,7 @@ class SignInPresenter(internal var view: SignInContract.View, val callbackManage
                         val email = mAuth?.currentUser!!.email
                         val name = mAuth?.currentUser!!.displayName
                         val url = mAuth?.currentUser!!.photoUrl
-                        val currentUserDb = myRef?.child("trip")?.child("user")?.child(userId)
+                        val currentUserDb = myRef?.child("user")?.child(userId)
                         currentUserDb?.child("name")?.setValue(name)
                         currentUserDb?.child("email")?.setValue(email)
                         currentUserDb?.child("uid")?.setValue(userId)
