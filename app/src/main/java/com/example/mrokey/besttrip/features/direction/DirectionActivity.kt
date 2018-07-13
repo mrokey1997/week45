@@ -19,6 +19,8 @@ import kotlinx.android.synthetic.main.activity_direction.*
     var start_longitude:Double?=null
     var end_latitude: Double?=null
     var end_longitude:Double?=null
+     var start_location:String?=null
+     var end_location:String?=null
     var type:String="driving"
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -42,15 +44,16 @@ import kotlinx.android.synthetic.main.activity_direction.*
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         val place_start = fragmentManager.findFragmentById(R.id.place_start) as PlaceAutocompleteFragment
-        place_start.setHint("Chọn điểm khỏi hành")
+        place_start.setHint("Chọn điểm khởi hành")
         val place_end = fragmentManager.findFragmentById(R.id.place_end) as PlaceAutocompleteFragment
         place_end.setHint("Chọn điểm đến")
         place_start.setOnPlaceSelectedListener(object:PlaceSelectionListener{
             override fun onPlaceSelected(place: Place?) {
                 if (place != null) {
-                    Toast.makeText(this@DirectionActivity,place.latLng.latitude.toString()+place.latLng.longitude.toString(),Toast.LENGTH_SHORT).show()
+                   // Toast.makeText(this@DirectionActivity,place.latLng.latitude.toString()+place.latLng.longitude.toString(),Toast.LENGTH_SHORT).show()
                     start_latitude=place.latLng.latitude
                     start_longitude=place.latLng.longitude
+                    start_location=place.name.toString()
                 }
             }
 
@@ -63,28 +66,33 @@ import kotlinx.android.synthetic.main.activity_direction.*
             override fun onPlaceSelected(place: Place?) {
                 //  var map:GoogleMap
                 if (place != null) {
-                    Toast.makeText(this@DirectionActivity,place.latLng.latitude.toString()+place.latLng.longitude.toString(),Toast.LENGTH_SHORT).show()
+                //    Toast.makeText(this@DirectionActivity,place.latLng.latitude.toString()+place.latLng.longitude.toString(),Toast.LENGTH_SHORT).show()
                     end_latitude=place.latLng.latitude
                     end_longitude=place.latLng.longitude
+                    end_location=place.name.toString()
                 }
             }
-
             override fun onError(place: Status?) {
                 Log.d("abc","place")
             }
-
         })
         img_back.setOnClickListener(View.OnClickListener {
-            val intent=Intent(this,SearchActivity::class.java)
-           // var bundle:Bundle
-            val mBundle = Bundle()
-            mBundle.putDouble("start_latitude",start_latitude!!)
-            mBundle.putDouble("start_longitude",start_longitude!!)
-            mBundle.putDouble("end_latitude",end_latitude!!)
-            mBundle.putDouble("end_longitude",end_longitude!!)
-            mBundle.putString("type",type)
-            intent.putExtras(mBundle)
-            startActivity(intent)
+            if(start_latitude==null||end_latitude==null){
+                Toast.makeText(this,"vui lòng chọn địa điểm",Toast.LENGTH_SHORT).show()
+            }else{
+                val intent=Intent(this,SearchActivity::class.java)
+                // var bundle:Bundle
+                val mBundle = Bundle()
+                mBundle.putDouble("start_latitude",start_latitude!!)
+                mBundle.putDouble("start_longitude",start_longitude!!)
+                mBundle.putDouble("end_latitude",end_latitude!!)
+                mBundle.putDouble("end_longitude",end_longitude!!)
+                mBundle.putString("type",type)
+                mBundle.putString("start_location",start_location);
+                mBundle.putString("end_location",end_location);
+                intent.putExtras(mBundle)
+                startActivity(intent)
+            }
         })
     }
 }

@@ -1,11 +1,15 @@
 package com.example.mrokey.besttrip.features.search
 
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.BottomSheetBehavior
+import android.support.design.widget.CoordinatorLayout
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -15,7 +19,7 @@ import com.example.mrokey.besttrip.R
 import com.example.mrokey.besttrip.features.direction.DirectionActivity
 import com.example.mrokey.besttrip.home.HomeActivity
 import com.example.mrokey.besttrip.model.Example
-import com.example.mrokey.besttrip.model.RetrofitMaps
+import com.example.mrokey.besttrip.recommend.RecommendActivity
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.places.Place
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment
@@ -26,14 +30,16 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import kotlinx.android.synthetic.main.activity_search.*
-import retrofit2.Call
-import retrofit2.Callback
+import pub.devrel.easypermissions.EasyPermissions
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.util.ArrayList
 
-class SearchActivity : AppCompatActivity(),OnMapReadyCallback ,SearchContract.View {
+class SearchActivity : AppCompatActivity(),OnMapReadyCallback, EasyPermissions.PermissionCallbacks,SearchContract.View {
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+    }
 
     lateinit var origin: LatLng
     lateinit var dest: LatLng
@@ -41,20 +47,25 @@ class SearchActivity : AppCompatActivity(),OnMapReadyCallback ,SearchContract.Vi
     lateinit var markerpoint: ArrayList<LatLng>
     lateinit var btnDriving: Button
     lateinit var btnWalking: Button
+    var start_location:String?=null
+    var end_location:String?=null
     var line: Polyline? = null
     var type:String?=null
+    var distance:String?=null
     private lateinit var map: GoogleMap
     private lateinit var myLocationCheckbox: CheckBox
     private lateinit var presenter: SearchContract.Presenter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+
         presenter = SearchPresenter(this)
         btnWalking=findViewById(R.id.btnWalking)
         btnDriving=findViewById(R.id.btnDriving)
         MarkerPoints = ArrayList()
         markerpoint= ArrayList()
         myLocationCheckbox = findViewById(R.id.myLocationCheckbox)
+//        bottomSheetBehavior= BottomSheetBehavior.from(bottom_sheet)
 
         val bundle = intent.extras
         if(bundle!=null){
@@ -62,10 +73,11 @@ class SearchActivity : AppCompatActivity(),OnMapReadyCallback ,SearchContract.Vi
         }
         if(type!=null){
 //           var start_latitude:Double=bundle.getDouble("start_latitude")
+            start_location=bundle.getString("start_location")
+            end_location=bundle.getString("end_location")
             markerpoint.add(LatLng(bundle.getDouble("start_latitude"),bundle.getDouble("start_longitude")))
             markerpoint.add(LatLng(bundle.getDouble("end_latitude"),bundle.getDouble("end_longitude")))
         }
-        Log.d("intent","nnn")
         val mapFragment : SupportMapFragment?=supportFragmentManager.findFragmentById(R.id.map)
                 as? SupportMapFragment
         mapFragment?.getMapAsync(this)
@@ -82,15 +94,30 @@ class SearchActivity : AppCompatActivity(),OnMapReadyCallback ,SearchContract.Vi
             }
         })
         btnDriving.setOnClickListener(View.OnClickListener {
-            presenter.getDataFromMap( origin.latitude.toString(), origin.longitude.toString(), dest.latitude.toString() ,dest.longitude.toString(), "driving")
+            if(MarkerPoints.size==2){
+                presenter.getDataFromMap( origin.latitude.toString(), origin.longitude.toString(), dest.latitude.toString() ,dest.longitude.toString(), "driving")
+            }
         })
         btnWalking.setOnClickListener(View.OnClickListener {
-            presenter.getDataFromMap( origin.latitude.toString() , origin.longitude.toString(), dest.latitude.toString() , dest.longitude.toString(), "walking")
+            if(MarkerPoints.size==2){
+                presenter.getDataFromMap( origin.latitude.toString() , origin.longitude.toString(), dest.latitude.toString() , dest.longitude.toString(), "walking")
+            }
         })
-        ic_direction.setOnClickListener(View.OnClickListener {
-            startActivity(Intent(this,DirectionActivity::class.java))
-        })
+            ic_direction.setOnClickListener(View.OnClickListener {
+                startActivity(Intent(this,DirectionActivity::class.java))
 
+            })
+        img_Go.setOnClickListener {
+            if(type!=null){
+                val intent=Intent(this,RecommendActivity::class.java)
+                val mBundle = Bundle()
+                mBundle.putString("distance", distance)
+                mBundle.putString("start_location",start_location)
+                mBundle.putString("end_location",end_location)
+                intent.putExtras(mBundle)
+                startActivity(intent)
+            }
+        }
     }
     override fun setPresenter(presenter: SearchContract.Presenter) {
         this.presenter = presenter
@@ -99,22 +126,21 @@ class SearchActivity : AppCompatActivity(),OnMapReadyCallback ,SearchContract.Vi
     override fun showAnnounce(message: String) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
     }
-
-
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap?) {
         map = googleMap ?: return
+        enableMyLocation()
 //        val sydney = LatLng(10.835307, 106.687726)
 //        map.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
 //        map.moveCamera(CameraUpdateFactory.newLatLng(sydney))
 //        map.animateCamera(CameraUpdateFactory.zoomTo(11f))
-        if (myLocationCheckbox.isChecked) presenter.enableMyLocation(map,this)
+        if (myLocationCheckbox.isChecked) enableMyLocation()
         myLocationCheckbox.setOnClickListener {
             if (!myLocationCheckbox.isChecked) {
                 map.isMyLocationEnabled = false
             } else {
                 map.clear()
-                presenter.enableMyLocation(map,this)
+                enableMyLocation()
             }
         }
         if(markerpoint.size>0){
@@ -167,9 +193,10 @@ class SearchActivity : AppCompatActivity(),OnMapReadyCallback ,SearchContract.Vi
             // This loop will go through all the results and add marker on each location.
             if (data != null) {
                 for (i in 0 until data.body()!!.getRoutes().size) {
-                    val distance = data.body()!!.getRoutes().get(i).getLegs().get(i).getDistance()!!.getText()
+
+                    distance = data.body()!!.getRoutes().get(i).getLegs().get(i).getDistance()!!.getText()
                     val time = data.body()!!.getRoutes().get(i).getLegs().get(i).getDuration()!!.getText()
-                    Toast.makeText(this@SearchActivity, distance + time, Toast.LENGTH_SHORT).show()
+                  //  Toast.makeText(this@SearchActivity, distance + time, Toast.LENGTH_SHORT).show()
                     val encodedString = data.body()!!.getRoutes().get(0).getOverviewPolyline()!!.getPoints()
                     val list = presenter.decodePoly(encodedString!!)
                     line = map.addPolyline(PolylineOptions()
@@ -186,4 +213,22 @@ class SearchActivity : AppCompatActivity(),OnMapReadyCallback ,SearchContract.Vi
         }
 
     }
+    @SuppressLint("MissingPermission")
+    fun enableMyLocation() {
+        val LOCATION_PERMISSION_REQUEST_CODE = 1
+        if(presenter.isGPSEnabled(this)==false){
+            Toast.makeText(this,"Vui lòng bậc GPS",Toast.LENGTH_SHORT).show()
+        }
+        val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
+
+        if (EasyPermissions.hasPermissions(this, *permissions)) {
+            map.isMyLocationEnabled = true
+        } else {
+            // if permissions are not currently granted, request permissions
+            EasyPermissions.requestPermissions(this,
+                    "Access to the location service is required to demonstrate the",
+                    LOCATION_PERMISSION_REQUEST_CODE, *permissions)
+        }
+    }
+
 }
