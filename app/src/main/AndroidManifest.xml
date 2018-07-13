@@ -22,14 +22,13 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".welcome.WelcomeActivity">
-
-        </activity>
+        <activity android:name=".welcome.WelcomeActivity" />
         <activity android:name=".features.search.SearchActivity" />
         <activity android:name=".features.authentication.forgot.ForgotPasswordActivity" />
         <activity android:name=".home.HomeActivity">
 
         </activity>
+
         <activity android:name=".features.authentication.AuthenticationActivity">
 
             <intent-filter>
@@ -39,6 +38,7 @@
             </intent-filter>
 
         </activity>
+
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -75,6 +75,15 @@
         <activity android:name=".company.TestingActivity">
 
         </activity>
+        <activity android:name=".recommend.RecommendActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".CompanyDetail.CompanyDetailActivity" />
+        <activity android:name=".RecommendDetail.RecommendActivity" />
+        <activity android:name=".RecommendDetail.RecommendDetailActivity" />
     </application>
 
 </manifest>

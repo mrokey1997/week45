@@ -21,9 +21,9 @@ interface SignInContract {
     interface Presenter{
         fun checkAccount(email:String, password: String)
 
-        fun authWithGoogle(acct: GoogleSignInAccount)
+        fun getAccount()
 
-        fun checkCurrentUser()
+        fun authWithGoogle(acct: GoogleSignInAccount)
 
         fun authWithFacebook()
     }

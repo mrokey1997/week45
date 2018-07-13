@@ -1,7 +1,6 @@
 package com.example.mrokey.besttrip.company
 
 import com.example.mrokey.besttrip.entities.Company
-import com.example.mrokey.besttrip.entities.Taxi
 import com.example.mrokey.besttrip.entities.Vehicle
 import com.google.firebase.database.*
 
@@ -35,7 +34,6 @@ class CompanyPresenter(internal var view: CompanyContract.View) : CompanyContrac
                                 vehicleChild.child("over_30km").value as Double
                         ))
                     }
-
                     listCompany.add(Company(
                             child.child("name").value.toString(),
                             child.child("address").value.toString(),

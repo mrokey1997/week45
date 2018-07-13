@@ -1,5 +1,8 @@
 package com.example.mrokey.besttrip.entities
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 data class Company(
         val name: String,
         val address: String,
@@ -9,10 +12,11 @@ data class Company(
         val logo: String
 )
 
+@Parcelize
 data class Vehicle(
-        val name: String,
-        val number_seat: Long,
-        val _1km: Long,
-        val over_1km: Double,
-        val over_30km: Double
-)
+        val name: String = "",
+        val number_seat: Long = 0,
+        val _1km: Long = 0,
+        val over_1km: Double = 0.0,
+        val over_30km: Double = 0.0
+): Parcelable

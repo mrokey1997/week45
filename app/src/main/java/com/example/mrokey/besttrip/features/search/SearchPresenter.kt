@@ -5,9 +5,10 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.location.LocationManager
+import android.view.View
 import com.example.mrokey.besttrip.model.Example
-import com.example.mrokey.besttrip.model.RetrofitMaps
-import com.example.mrokey.besttrip.until.APIService
+import com.example.mrokey.besttrip.api.RetrofitMaps
+
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import pub.devrel.easypermissions.EasyPermissions
@@ -55,8 +56,7 @@ class SearchPresenter(internal var view: SearchContract.View) : SearchContract.P
 
         return poly
     }
-
-    override fun getDataFromMap(start_latitude: String, start_longitude: String, end_latitude: String, end_longitude: String, type: String) { var  api: APIService
+    override fun getDataFromMap(start_latitude: String, start_longitude: String, end_latitude: String, end_longitude: String, type: String) {
         val url = "https://maps.googleapis.com/maps/"
 
         val retrofit = Retrofit.Builder()
@@ -94,25 +94,5 @@ class SearchPresenter(internal var view: SearchContract.View) : SearchContract.P
     override fun isGPSEnabled(mContext: Context): Boolean {
         val lm = mContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return lm.isProviderEnabled(LocationManager.GPS_PROVIDER)
-    }
-
-    @SuppressLint("MissingPermission")
-    override fun enableMyLocation(map: GoogleMap, mContext: Context) {
-         val LOCATION_PERMISSION_REQUEST_CODE = 1
-        var message: String ="Vui lòng bậc gps"
-       if(isGPSEnabled(mContext)==false){
-           view.showAnnounce(message)
-       }
-        val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
-
-        if (EasyPermissions.hasPermissions(mContext, *permissions)) {
-            map.isMyLocationEnabled = true
-
-        } else {
-            // if permissions are not currently granted, request permissions
-            EasyPermissions.requestPermissions(Activity(),
-            "Access to the location service is required to demonstrate the",
-            LOCATION_PERMISSION_REQUEST_CODE, *permissions)
-        }
     }
 }

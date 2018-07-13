@@ -60,7 +60,6 @@ class CompanyActivity : AppCompatActivity(), CompanyContract.View {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Taxi List"
     }
-
     private fun initRecyclerView() {
         rv_taxi.hasFixedSize()
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -100,7 +99,6 @@ class CompanyActivity : AppCompatActivity(), CompanyContract.View {
                 return false
             }
         })
-
         return true
     }
 
