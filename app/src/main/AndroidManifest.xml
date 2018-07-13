@@ -31,11 +31,13 @@
 
         </activity>
         <activity android:name=".features.authentication.AuthenticationActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
         <meta-data
@@ -69,6 +71,9 @@
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".company.TestingActivity">
+
         </activity>
     </application>
 

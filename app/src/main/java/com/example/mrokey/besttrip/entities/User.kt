@@ -1,7 +1,10 @@
 package com.example.mrokey.besttrip.entities
 
-data class User(
+import android.net.Uri
+
+class User(
+        val picture: Uri,
         val name: String,
         val id: String,
-        val email: String,
+        val email: String?,
         val permissions: String)

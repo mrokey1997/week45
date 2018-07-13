@@ -12,7 +12,7 @@ class CompanyPresenter(internal var view: CompanyContract.View) : CompanyContrac
 
     init {
         view.setPresenter(this)
-        mReference = FirebaseDatabase.getInstance().reference.child("trip").child("company")
+        mReference = FirebaseDatabase.getInstance().reference.child("company")
     }
 
     override fun getDatabase(listener: CompanyContract.View) {
@@ -32,7 +32,7 @@ class CompanyPresenter(internal var view: CompanyContract.View) : CompanyContrac
                                 vehicleChild.child("number_seat").value as Long,
                                 vehicleChild.child("_1km").value as Long,
                                 vehicleChild.child("over_1km").value as Double,
-                                vehicleChild.child("over_31km").value as Double
+                                vehicleChild.child("over_30km").value as Double
                         ))
                     }
 
@@ -44,9 +44,8 @@ class CompanyPresenter(internal var view: CompanyContract.View) : CompanyContrac
                             child.child("wait_time").value as Long,
                             child.child("logo").value.toString()
                     ))
-
-                    listener.onDataChange(listCompany)
                 }
+                listener.onDataChange(listCompany)
             }
 
             override fun onCancelled(p0: DatabaseError) {

@@ -1,6 +1,7 @@
 package com.example.mrokey.besttrip.adapter
 
 import android.content.Context
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -41,6 +42,11 @@ class CompanyAdapter(private var companies: MutableList<Company>, private val co
         Glide.with(context)
                 .load(company?.logo)
                 .into(holder.imgLogo)
+        when (position % 3) {
+            0 -> holder.parent.setBackgroundColor(context.resources.getColor(R.color.purple))
+            1 -> holder.parent.setBackgroundColor(context.resources.getColor(R.color.deepPurple))
+            2 -> holder.parent.setBackgroundColor(context.resources.getColor(R.color.indigo))
+        }
     }
 
     fun setData(companies: MutableList<Company>) {
@@ -87,6 +93,7 @@ class CompanyAdapter(private var companies: MutableList<Company>, private val co
         val imgLogo = view.img_logo as ImageView
         val tvName = view.tv_name as TextView
         val tvPhone = view.tv_phone as TextView
+        val parent = view.view_parent as CardView
 
         init {
             view.setOnClickListener{

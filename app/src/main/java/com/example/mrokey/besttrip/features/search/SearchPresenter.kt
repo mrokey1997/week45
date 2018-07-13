@@ -110,9 +110,9 @@ class SearchPresenter(internal var view: SearchContract.View) : SearchContract.P
 
         } else {
             // if permissions are not currently granted, request permissions
-//            EasyPermissions.requestPermissions(Activity(),
-//            "Access to the location service is required to demonstrate the",
-//            LOCATION_PERMISSION_REQUEST_CODE, *permissions)
+            EasyPermissions.requestPermissions(Activity(),
+            "Access to the location service is required to demonstrate the",
+            LOCATION_PERMISSION_REQUEST_CODE, *permissions)
         }
     }
 }

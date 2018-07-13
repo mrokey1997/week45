@@ -9,11 +9,10 @@ data class Company(
         val logo: String
 )
 
-
 data class Vehicle(
         val name: String,
         val number_seat: Long,
         val _1km: Long,
         val over_1km: Double,
-        val over_31km: Double
+        val over_30km: Double
 )

@@ -10,25 +10,32 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.example.mrokey.besttrip.R
-import com.example.mrokey.besttrip.company.CompanyActivity
+import com.example.mrokey.besttrip.callbacks.GetUserCallback
+import com.example.mrokey.besttrip.entities.User
 import com.example.mrokey.besttrip.features.authentication.AuthenticationActivity
 import com.example.mrokey.besttrip.features.search.SearchActivity
+import com.example.mrokey.besttrip.requests.UserRequest
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.content_home.*
+import kotlinx.android.synthetic.main.nav_header_main.view.*
 
-class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, GetUserCallback.IGetUserResponse {
     var mAuth: FirebaseAuth? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
         mAuth = FirebaseAuth.getInstance()
+
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
+
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbarMenu, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
@@ -39,6 +46,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             startActivity(Intent(this, SearchActivity::class.java))
         }
     }
+
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
@@ -46,6 +54,12 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             super.onBackPressed()
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        UserRequest.makeUserRequest(GetUserCallback(this@HomeActivity).getCallback())
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
@@ -90,5 +104,16 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onCompleted(user: User) {
+        tv_name.text = user.name
+        Glide.with(this)
+                .load(user.picture)
+                .into(img_avatar)
+        nav_view.tv_name.text = user.name
+        Glide.with(this)
+                .load(user.picture)
+                .into(nav_view.img_avatar)
     }
 }

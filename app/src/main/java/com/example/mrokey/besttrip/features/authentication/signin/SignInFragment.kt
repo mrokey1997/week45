@@ -49,10 +49,12 @@ class SignInFragment: Fragment(), SignInContract.View {
         btSignIn.setOnClickListener {
             getAccount()
         }
+
         btEmail.setOnClickListener {
             initGoogleSignIn()
             signInWithGoogleSignIn()
         }
+
         btFacebook.setOnClickListener {
             presenter?.authWithFacebook()
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"))
@@ -113,9 +115,11 @@ class SignInFragment: Fragment(), SignInContract.View {
                 presenter?.authWithGoogle(account!!)
             }
         }
+
         //Facebook
         mCallbackManager.onActivityResult(requestCode, resultCode, data)
     }
+
     override fun onSuccessLoginFacebook(result: LoginResult?) {
         Toast.makeText(context, "Login Success", Toast.LENGTH_LONG).show()
         startActivity(Intent(activity, HomeActivity::class.java))

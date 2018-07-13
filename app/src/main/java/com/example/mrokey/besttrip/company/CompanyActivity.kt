@@ -13,6 +13,7 @@ import com.example.mrokey.besttrip.entities.Company
 
 import com.example.mrokey.besttrip.R
 import com.example.mrokey.besttrip.adapter.CompanyAdapter
+import com.google.firebase.database.DatabaseError
 import io.reactivex.disposables.Disposable
 
 import kotlinx.android.synthetic.main.activity_company.*
@@ -74,6 +75,11 @@ class CompanyActivity : AppCompatActivity(), CompanyContract.View {
 
     override fun onDataChange(companies: ArrayList<Company>) {
         mCompanyAdapter.setData(companies)
+    }
+
+
+    override fun onCancelled(p0: DatabaseError) {
+        Toast.makeText(this, "Cannot get data from server", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -2,8 +2,8 @@
     <string name="app_name">Together We Go</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Lê Xuân Chính</string>
-    <string name="nav_header_subtitle">LeXuanChinh1507@gmail.com</string>
+    <string name="nav_header_title">Name</string>
+    <string name="nav_header_subtitle">example@gmail.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
@@ -32,5 +32,12 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_home">Driving</string>
     <string name="title_dashboard">Walking</string>
+    <string name="taxi">Taxi</string>
+    <string name="isName">Name:</string>
+    <string name="isPhone">Phone:</string>
+    <string name="isAddress">Address:</string>
+    <string name="name_sample">Vinasun</string>
+    <string name="phone_sample">38 27 27 27</string>
+    <string name="address_sample">306 Điện Biên Phủ, P.22, Q.Bình Thạnh</string>
 
 </resources>
