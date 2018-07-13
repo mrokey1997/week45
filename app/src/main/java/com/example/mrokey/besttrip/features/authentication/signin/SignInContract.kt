@@ -23,8 +23,6 @@ interface SignInContract {
 
         fun authWithGoogle(acct: GoogleSignInAccount)
 
-        fun checkCurrentUser()
-
         fun authWithFacebook()
     }
 }

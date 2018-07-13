@@ -97,32 +97,32 @@ class RecommendActivity: AppCompatActivity(),RecommendContract.View, View.OnClic
                 rv4.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
                 val adapter = SeatsAdapter(size, taxiSeats, this@RecommendActivity)
                 rv4.adapter = adapter
-                more4seats.text = if(size == 2) "Hide"
-                else "View All"
+                more4seats.text = if(size == 2) "View All"
+                else "Hide"
             }
             5 -> {
                 val rv5 = findViewById<RecyclerView>(R.id.rv5_seater)
                 rv5.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
                 val adapter = SeatsAdapter(size, taxiSeats, this@RecommendActivity)
                 rv5.adapter = adapter
-                more5seats.text = if(size == 2) "Hide"
-                else "View All"
+                more5seats.text = if(size == 2) "View All"
+                else "Hide"
             }
             7 -> {
                 val rv7 = findViewById<RecyclerView>(R.id.rv7_seater)
                 rv7.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
                 val adapter = SeatsAdapter(size, taxiSeats, this@RecommendActivity)
                 rv7.adapter = adapter
-                more7seats.text = if(size == 2) "Hide"
-                else "View All"
+                more7seats.text = if(size == 2) "View All"
+                else "Hide"
             }
             8 -> {
                 val rv8 = findViewById<RecyclerView>(R.id.rv8_seater)
                 rv8.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
                 val adapter = SeatsAdapter(size, taxiSeats, this@RecommendActivity)
                 rv8.adapter = adapter
-                more8seats.text = if(size == 2) "Hide"
-                else "View All"
+                more8seats.text = if(size == 2) "View All"
+                else "Hide"
             }
         }
     }

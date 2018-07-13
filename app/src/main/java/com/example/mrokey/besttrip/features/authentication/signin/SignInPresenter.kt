@@ -25,10 +25,6 @@ class SignInPresenter(internal var view: SignInContract.View, val callbackManage
         myRef= FirebaseDatabase.getInstance().reference
     }
 
-    override fun checkCurrentUser() {
-        if(mAuth?.currentUser!=null)
-            view.getSuccess()
-    }
     override fun checkAccount(email: String, password: String) {
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
             view.showLoading(true)
@@ -70,7 +66,7 @@ class SignInPresenter(internal var view: SignInContract.View, val callbackManage
                         currentUserDb?.child("name")?.setValue(name)
                         currentUserDb?.child("email")?.setValue(email)
                         currentUserDb?.child("uid")?.setValue(userId)
-                        currentUserDb?.child("url")?.setValue(url)
+                        //currentUserDb?.child("url")?.setValue(url)
                     } else {
                         message = "fail AuthWithGoogle"
                         view.showError(message)
