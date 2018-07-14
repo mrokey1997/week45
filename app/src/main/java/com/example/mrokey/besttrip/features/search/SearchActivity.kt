@@ -6,6 +6,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.location.Location
+import android.location.LocationListener
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
@@ -40,13 +42,11 @@ class SearchActivity : AppCompatActivity(),OnMapReadyCallback, EasyPermissions.P
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
     }
-
+    lateinit var bottomSheetBehavior:BottomSheetBehavior<View>
     lateinit var origin: LatLng
     lateinit var dest: LatLng
     lateinit var MarkerPoints: ArrayList<LatLng>
     lateinit var markerpoint: ArrayList<LatLng>
-    lateinit var btnDriving: Button
-    lateinit var btnWalking: Button
     var start_location:String?=null
     var end_location:String?=null
     var line: Polyline? = null
@@ -60,13 +60,18 @@ class SearchActivity : AppCompatActivity(),OnMapReadyCallback, EasyPermissions.P
         setContentView(R.layout.activity_search)
 
         presenter = SearchPresenter(this)
-        btnWalking=findViewById(R.id.btnWalking)
-        btnDriving=findViewById(R.id.btnDriving)
         MarkerPoints = ArrayList()
         markerpoint= ArrayList()
-        myLocationCheckbox = findViewById(R.id.myLocationCheckbox)
-//        bottomSheetBehavior= BottomSheetBehavior.from(bottom_sheet)
-
+      //  myLocationCheckbox = findViewById(R.id.myLocationCheckbox)
+        bottomSheetBehavior= BottomSheetBehavior.from(bottom_sheet)
+        bottomSheetBehavior.isHideable=true
+        bottomSheetBehavior.state=BottomSheetBehavior.STATE_HIDDEN
+//        btnTest.setOnClickListener {
+//            if(bottomSheetBehavior.state==BottomSheetBehavior.STATE_HIDDEN){
+//                bottomSheetBehavior.state=BottomSheetBehavior.STATE_EXPANDED
+//            }
+//            else bottomSheetBehavior.state=BottomSheetBehavior.STATE_HIDDEN
+//        }
         val bundle = intent.extras
         if(bundle!=null){
             type=bundle.getString("type")
@@ -77,6 +82,9 @@ class SearchActivity : AppCompatActivity(),OnMapReadyCallback, EasyPermissions.P
             end_location=bundle.getString("end_location")
             markerpoint.add(LatLng(bundle.getDouble("start_latitude"),bundle.getDouble("start_longitude")))
             markerpoint.add(LatLng(bundle.getDouble("end_latitude"),bundle.getDouble("end_longitude")))
+            bottomSheetBehavior.state=BottomSheetBehavior.STATE_EXPANDED
+            txt_start.setText(start_location)
+            txt_end.setText(end_location)
         }
         val mapFragment : SupportMapFragment?=supportFragmentManager.findFragmentById(R.id.map)
                 as? SupportMapFragment
@@ -93,21 +101,21 @@ class SearchActivity : AppCompatActivity(),OnMapReadyCallback, EasyPermissions.P
                 Log.d("abc", "chinh")
             }
         })
-        btnDriving.setOnClickListener(View.OnClickListener {
-            if(MarkerPoints.size==2){
-                presenter.getDataFromMap( origin.latitude.toString(), origin.longitude.toString(), dest.latitude.toString() ,dest.longitude.toString(), "driving")
-            }
-        })
-        btnWalking.setOnClickListener(View.OnClickListener {
-            if(MarkerPoints.size==2){
-                presenter.getDataFromMap( origin.latitude.toString() , origin.longitude.toString(), dest.latitude.toString() , dest.longitude.toString(), "walking")
-            }
-        })
+//        btnDriving.setOnClickListener(View.OnClickListener {
+//            if(MarkerPoints.size==2){
+//                presenter.getDataFromMap( origin.latitude.toString(), origin.longitude.toString(), dest.latitude.toString() ,dest.longitude.toString(), "driving")
+//            }
+//        })
+//        btnWalking.setOnClickListener(View.OnClickListener {
+//            if(MarkerPoints.size==2){
+//                presenter.getDataFromMap( origin.latitude.toString() , origin.longitude.toString(), dest.latitude.toString() , dest.longitude.toString(), "walking")
+//            }
+//        })
             ic_direction.setOnClickListener(View.OnClickListener {
                 startActivity(Intent(this,DirectionActivity::class.java))
 
             })
-        img_Go.setOnClickListener {
+        img_start.setOnClickListener {
             if(type!=null){
                 val intent=Intent(this,RecommendActivity::class.java)
                 val mBundle = Bundle()
@@ -130,24 +138,12 @@ class SearchActivity : AppCompatActivity(),OnMapReadyCallback, EasyPermissions.P
     override fun onMapReady(googleMap: GoogleMap?) {
         map = googleMap ?: return
         enableMyLocation()
-//        val sydney = LatLng(10.835307, 106.687726)
-//        map.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-//        map.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-//        map.animateCamera(CameraUpdateFactory.zoomTo(11f))
-        if (myLocationCheckbox.isChecked) enableMyLocation()
-        myLocationCheckbox.setOnClickListener {
-            if (!myLocationCheckbox.isChecked) {
-                map.isMyLocationEnabled = false
-            } else {
-                map.clear()
-                enableMyLocation()
-            }
-        }
         if(markerpoint.size>0){
             map.clear()
             //Setting the piosition of the marker
-            map.addMarker(MarkerOptions().position(markerpoint.get(0)).title("a"))
-            map.addMarker(MarkerOptions().position(markerpoint.get(1)).title("b"))
+            map.addMarker(MarkerOptions().position(markerpoint.get(0)).title(start_location))
+            map.addMarker(MarkerOptions().position(markerpoint.get(0)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)))
+            map.addMarker(MarkerOptions().position(markerpoint.get(1)).title(end_location))
             map.moveCamera(CameraUpdateFactory.newLatLng(markerpoint.get(0)))
             map.animateCamera(CameraUpdateFactory.zoomTo(15f))
             presenter.getDataFromMap(markerpoint.get(0).latitude.toString(),markerpoint.get(0).longitude.toString(),
@@ -156,31 +152,31 @@ class SearchActivity : AppCompatActivity(),OnMapReadyCallback, EasyPermissions.P
 
             //Checks ,whether start and end locations are captured
         }
-        map.setOnMapClickListener(GoogleMap.OnMapClickListener { point ->
-            if (MarkerPoints.size > 1) {
-                map.clear()
-                MarkerPoints.clear()
-            }
-            MarkerPoints.add(point)
-            //Creating MarkerOptions
-            val options = MarkerOptions()
-            //Setting the piosition of the marker
-            options.position(point)
-            if (MarkerPoints.size == 1) {
-                options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-            } else if (MarkerPoints.size == 2) {
-                options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-            }
-
-            //Add new marker to the Google Map Android API V2
-            map.addMarker(options)
-            //Checks ,whether start and end locations are captured
-            if (MarkerPoints.size >= 2) {
-                origin = MarkerPoints[0]
-                Toast.makeText(this@SearchActivity, MarkerPoints[0].latitude.toString(), Toast.LENGTH_SHORT).show()
-                dest = MarkerPoints[1]
-            }
-        })
+//        map.setOnMapClickListener(GoogleMap.OnMapClickListener { point ->
+//            if (MarkerPoints.size > 1) {
+//                map.clear()
+//                MarkerPoints.clear()
+//            }
+//            MarkerPoints.add(point)
+//            //Creating MarkerOptions
+//            val options = MarkerOptions()
+//            //Setting the piosition of the marker
+//            options.position(point)
+//            if (MarkerPoints.size == 1) {
+//                options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+//            } else if (MarkerPoints.size == 2) {
+//                options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+//            }
+//
+//            //Add new marker to the Google Map Android API V2
+//            map.addMarker(options)
+//            //Checks ,whether start and end locations are captured
+//            if (MarkerPoints.size >= 2) {
+//                origin = MarkerPoints[0]
+//                Toast.makeText(this@SearchActivity, MarkerPoints[0].latitude.toString(), Toast.LENGTH_SHORT).show()
+//                dest = MarkerPoints[1]
+//            }
+//        })
 
     }
     override fun onGetStatusesSuccess(data: Response<Example>?) {
@@ -196,13 +192,14 @@ class SearchActivity : AppCompatActivity(),OnMapReadyCallback, EasyPermissions.P
 
                     distance = data.body()!!.getRoutes().get(i).getLegs().get(i).getDistance()!!.getText()
                     val time = data.body()!!.getRoutes().get(i).getLegs().get(i).getDuration()!!.getText()
+                    txt_Time.setText(distance+" (" +time+")")
                   //  Toast.makeText(this@SearchActivity, distance + time, Toast.LENGTH_SHORT).show()
                     val encodedString = data.body()!!.getRoutes().get(0).getOverviewPolyline()!!.getPoints()
                     val list = presenter.decodePoly(encodedString!!)
                     line = map.addPolyline(PolylineOptions()
                             .addAll(list)
                             .width(8f)
-                            .color(Color.RED)
+                            .color(Color.BLUE)
                             .geodesic(true)
                     )
                 }
@@ -211,7 +208,6 @@ class SearchActivity : AppCompatActivity(),OnMapReadyCallback, EasyPermissions.P
             Log.d("onResponse", "There is an error")
             e.printStackTrace()
         }
-
     }
     @SuppressLint("MissingPermission")
     fun enableMyLocation() {
@@ -223,6 +219,8 @@ class SearchActivity : AppCompatActivity(),OnMapReadyCallback, EasyPermissions.P
 
         if (EasyPermissions.hasPermissions(this, *permissions)) {
             map.isMyLocationEnabled = true
+
+
         } else {
             // if permissions are not currently granted, request permissions
             EasyPermissions.requestPermissions(this,
