@@ -34,14 +34,14 @@ class RecommendActivity: AppCompatActivity(),RecommendContract.View, View.OnClic
         more7seats.setOnClickListener(this)
         more8seats.setOnClickListener(this)
         val bundle = intent.extras
-        if(bundle!=null){
-            var start_location:String?=null
-            var end_location:String?=null
-            var distance:String?=null
-            start_location=   bundle.getString("start_location")
-            end_location=  bundle.getString("end_location")
-            distance=  bundle.getString("distance")
-        }
+        val start = bundle.getString("start_location")
+        val end = bundle.getString("end_location")
+        val distance = bundle.getString("distance")
+        val startToEnd = distance.replace(" km", "").toFloat()
+        startLocation.text = start
+        endLocation.text = end
+        presenter?.getData(start, end, startToEnd)
+    }
 
     override fun setRecyclerView() {
         rv4 = findViewById(R.id.rv4_seater)
