@@ -49,5 +49,6 @@
     <string name="sample_address">No. 160, Street 20, Ward 5, Go Vap District</string>
     <string name="where">Where you heading?</string>
     <string name="welcome">Welcome,</string>
+    <string name="view">View All</string>
 
 </resources>

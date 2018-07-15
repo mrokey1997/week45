@@ -13,7 +13,7 @@ class WelcomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_start)
         val thread = Thread(Runnable {
             try {
-                Thread.sleep(3000)
+                Thread.sleep(1000)
             } catch (e: Exception) {
 
             } finally {

@@ -3,30 +3,23 @@ package com.example.mrokey.besttrip.features.authentication.signin
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import com.example.mrokey.besttrip.R
-import com.example.mrokey.besttrip.features.search.SearchActivity
 import com.example.mrokey.besttrip.home.HomeActivity
 import com.facebook.CallbackManager
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 import com.google.android.gms.auth.api.Auth
-import com.google.android.gms.auth.api.signin.*
 import com.google.android.gms.common.api.GoogleApiClient
 import java.util.*
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.ConnectionResult
 import com.google.firebase.auth.FirebaseAuth
-
-
-
-
 
 class SignInFragment: Fragment(), SignInContract.View, GoogleApiClient.OnConnectionFailedListener {
 
@@ -40,7 +33,7 @@ class SignInFragment: Fragment(), SignInContract.View, GoogleApiClient.OnConnect
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        presenter?.CurrentAccount()
         //Facebook
         mCallbackManager = CallbackManager.Factory.create()
 
@@ -48,17 +41,15 @@ class SignInFragment: Fragment(), SignInContract.View, GoogleApiClient.OnConnect
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_sign_in,container, false)
-
         val btSignIn = view.findViewById(R.id.btSignIn) as Button
         val btEmail = view.findViewById(R.id.btn_email) as Button
         val btFacebook = view.findViewById(R.id.btn_facebook) as Button
-
+        initGoogleSignIn()
         btSignIn.setOnClickListener {
             getAccount()
         }
 
         btEmail.setOnClickListener {
-            initGoogleSignIn()
             signInWithGoogleSignIn()
         }
 
@@ -69,10 +60,6 @@ class SignInFragment: Fragment(), SignInContract.View, GoogleApiClient.OnConnect
         return view
     }
 
-    override fun onResume() {
-        super.onResume()
-        presenter?.getAccount()
-    }
     override fun setPresenter(presenter: SignInContract.Presenter) {
         this.presenter = presenter
     }
@@ -104,8 +91,8 @@ class SignInFragment: Fragment(), SignInContract.View, GoogleApiClient.OnConnect
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build()
-        mGoogleApiClient = GoogleApiClient.Builder(context!!)
-                .enableAutoManage(activity!! /* FragmentActivity */, this /* OnConnectionFailedListener */)
+        mGoogleApiClient = GoogleApiClient.Builder(this@SignInFragment.requireContext())
+                .enableAutoManage(this@SignInFragment.requireActivity() /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build()
         mFirebaseAuth = FirebaseAuth.getInstance()
@@ -125,7 +112,7 @@ class SignInFragment: Fragment(), SignInContract.View, GoogleApiClient.OnConnect
         }
 
         //Facebook
-        mCallbackManager.onActivityResult(requestCode, resultCode, data)
+        else mCallbackManager.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onSuccessLoginFacebook(result: LoginResult?) {
@@ -134,5 +121,11 @@ class SignInFragment: Fragment(), SignInContract.View, GoogleApiClient.OnConnect
     }
     override fun onConnectionFailed(p0: ConnectionResult) {
         Toast.makeText(context, "Google Play Services error.", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mGoogleApiClient?.stopAutoManage(this@SignInFragment.requireActivity())
+        mGoogleApiClient?.disconnect()
     }
 }

@@ -11,12 +11,15 @@ import com.example.mrokey.besttrip.R
 import kotlinx.android.synthetic.main.item_recommend.view.*
 import android.content.Intent
 import android.os.Bundle
-import com.example.mrokey.besttrip.CompanyDetail.CompanyDetailActivity
-import com.example.mrokey.besttrip.RecommendDetail.RecommendDetailActivity
+import com.example.mrokey.besttrip.detail.RecommendDetailActivity
 
 
-class SeatsAdapter(val size: Int, val items : ArrayList<Taxi>, val context: Context) : RecyclerView.Adapter<SeatsAdapter.ViewHolder>() {
+class SeatsAdapter(val size: Int, var items : ArrayList<Taxi>, val context: Context) : RecyclerView.Adapter<SeatsAdapter.ViewHolder>() {
     // Gets the number of animals in the list
+    fun setData(taxi: ArrayList<Taxi>) {
+        items = taxi
+        notifyDataSetChanged()
+    }
     override fun getItemCount(): Int {
         return size
     }
@@ -32,13 +35,13 @@ class SeatsAdapter(val size: Int, val items : ArrayList<Taxi>, val context: Cont
         holder.company.text = items[position].company
         holder.price.text = items[position].price
         holder.phone.text = items[position].phone
-        holder.itemView.setOnClickListener({
+        holder.itemView.setOnClickListener {
             val intent = Intent(context, RecommendDetailActivity::class.java)
             val bundle = Bundle()
             bundle.putParcelable("taxi",items[position])
             intent.putExtra("myBundle",bundle)
             context.startActivity(intent)
-        })
+        }
     }
     class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.tvName

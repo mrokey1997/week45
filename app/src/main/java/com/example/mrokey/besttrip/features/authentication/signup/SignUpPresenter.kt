@@ -1,10 +1,11 @@
-
 package com.example.mrokey.besttrip.features.authentication.signup
+
 import android.text.TextUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import android.util.Log
+
 class SignUpPresenter(internal var view: SignUpContract.View) : SignUpContract.Presenter {
     var myRef: DatabaseReference? = null
     var mAuth: FirebaseAuth? = null

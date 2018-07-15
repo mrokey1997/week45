@@ -20,9 +20,11 @@ class RecommendPresenter(internal var view: RecommendContract.View): RecommendCo
         view.setPresenter(this)
         myRef= FirebaseDatabase.getInstance().reference.child("company")
     }
-    override fun getData() {
+    override fun getData(start: String, end: String, distance: Float) {
+        view.showLoading(true)
         myRef?.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var startToEnd = distance
                 Thread{
                     var i = 0
                     while (i < dataSnapshot.childrenCount)
@@ -34,6 +36,7 @@ class RecommendPresenter(internal var view: RecommendContract.View): RecommendCo
                         val logo = data.child("logo").value.toString()
                         val child = data.child("vehicle")
                         var j = 0
+
                         while(j<child.childrenCount) {
                             val vehicle = child.child(j.toString()).getValue<Vehicle>(Vehicle::class.java)
                             if (vehicle!=null) {
@@ -41,31 +44,38 @@ class RecommendPresenter(internal var view: RecommendContract.View): RecommendCo
                                 val priceOver1km = vehicle.over_1km.toFloat()
                                 val priceOver30km = vehicle.over_30km.toFloat()
                                 var price = 0F
-                                var FAR = 100F
-                                if (FAR > 30.0) {
-                                    price += ((FAR - 30.0) * priceOver30km).toFloat()
-                                    FAR = 30F
+                                if(startToEnd<1){
+                                    price = price1km
                                 }
-                                if (FAR > 1) {
-                                    price += ((FAR - 1) * priceOver1km)
-                                    FAR = 1F
+                                else {
+                                    if (startToEnd > 30.0) {
+                                        price += ((startToEnd - 30.0) * priceOver30km).toFloat()
+                                        startToEnd = 30F
+                                    }
+                                    //if (startToEnd > 1) {
+                                    price += ((startToEnd - 1) * priceOver1km)
+                                    startToEnd = 1F
+                                    //}
+                                    price += startToEnd * price1km
                                 }
-                                if (FAR > 0) price += FAR * price1km
-                                val priceFormat = PriceFormat.priceFormat(price.toFloat()) + " VND"
+                                val priceFormat = PriceFormat.priceFormat(price) + " VND"
                                 when (vehicle.number_seat.toString()) {
-                                    "4" -> taxiFourSeats.add(Taxi(company, phone, priceFormat,FAR, address, logo, vehicle))
-                                    "5" -> taxiFiveSeats.add(Taxi(company, phone, priceFormat,FAR, address, logo, vehicle))
-                                    "7" -> taxiSevenSeats.add(Taxi(company, phone, priceFormat,FAR, address, logo, vehicle))
-                                    "8" -> taxiEightSeats.add(Taxi(company, phone, priceFormat,FAR, address, logo, vehicle))
+                                    "4" -> taxiFourSeats.add(Taxi(start,end,company, phone, priceFormat,distance, address, logo, vehicle))
+                                    "5" -> taxiFiveSeats.add(Taxi(start,end,company, phone, priceFormat,distance, address, logo, vehicle))
+                                    "7" -> taxiSevenSeats.add(Taxi(start,end,company, phone, priceFormat,distance, address, logo, vehicle))
+                                    "8" -> taxiEightSeats.add(Taxi(start,end,company, phone, priceFormat,distance, address, logo, vehicle))
                                 }
+                                startToEnd = distance
                             }
                             j += 1
                         }
                         i += 1
                     }
                    val handler = android.os.Handler(Looper.getMainLooper())
-                    handler.post({
-                        view.setView(taxiFourSeats,taxiFiveSeats,taxiSevenSeats,taxiEightSeats)                    })
+                    handler.post {
+                        view.showLoading(false)
+                        view.setView(taxiFourSeats,taxiFiveSeats,taxiSevenSeats,taxiEightSeats)}
+
                 }.start()
 
             }

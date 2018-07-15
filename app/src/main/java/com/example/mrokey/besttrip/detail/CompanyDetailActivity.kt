@@ -1,4 +1,4 @@
-package com.example.mrokey.besttrip.CompanyDetail
+package com.example.mrokey.besttrip.detail
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity

@@ -29,14 +29,11 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
         mAuth = FirebaseAuth.getInstance()
-
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
-
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbarMenu, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
@@ -47,7 +44,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             startActivity(Intent(this, SearchActivity::class.java))
         }
     }
-
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)

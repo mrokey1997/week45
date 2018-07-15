@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import com.example.mrokey.besttrip.R
-import com.example.mrokey.besttrip.R.id.toolbarForgot
 import kotlinx.android.synthetic.main.activity_forgot_password.*
 
 class ForgotPasswordActivity : AppCompatActivity(),ForgotPasswordContract.View {

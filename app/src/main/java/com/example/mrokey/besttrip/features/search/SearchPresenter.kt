@@ -1,15 +1,9 @@
 package com.example.mrokey.besttrip.features.search
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.location.LocationManager
-import android.view.View
 import com.example.mrokey.besttrip.model.Example
 import com.example.mrokey.besttrip.api.RetrofitMaps
-
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import pub.devrel.easypermissions.EasyPermissions
 import retrofit2.Call
@@ -65,8 +59,8 @@ class SearchPresenter(internal var view: SearchContract.View) : SearchContract.P
                 .build()
 
         val service = retrofit.create<RetrofitMaps>(RetrofitMaps::class.java!!)
-       var call= service.getDistanceDuration("metric",start_latitude+","+start_longitude
-        ,end_latitude+","+end_longitude,type)
+       var call= service.getDistanceDuration("metric", "$start_latitude,$start_longitude"
+        , "$end_latitude,$end_longitude",type)
         call.enqueue(object : Callback, retrofit2.Callback<Example> {
 
             override fun onResponse(call: Call<Example>?, response: Response<Example>?) {

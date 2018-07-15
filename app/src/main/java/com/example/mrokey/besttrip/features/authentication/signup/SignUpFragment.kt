@@ -10,7 +10,6 @@ import android.widget.Toast
 import android.widget.Button
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 
-
 class SignUpFragment: Fragment(),SignUpContract.View {
 
     private var presenter: SignUpContract.Presenter? = null
