@@ -12,4 +12,19 @@
     <color name="indigo">#e8eaf6</color>
     <color name="purple">#f3e5f5</color>
     <color name="deepPurple">#ede7f6</color>
+    <color name="normalColorText">#000000</color>
+
+    <!-- Expanding Collection -->
+    <color name="bgGradientStart">#000000</color>
+    <color name="bgGradientEnd">#d8000000</color>
+
+    <color name="bgSolidDark">#11000000</color>
+
+    <color name="headGradientStart">#00ffffff</color>
+    <color name="headGradientCenter">#00ffffff</color>
+    <color name="headGradientEnd">#96000000</color>
+
+    <color name="colorListDivider">#e6e6e6</color>
+
+    <color name="transparent">#00ffffff</color>
 </resources>

@@ -31,11 +31,7 @@
 
         <activity android:name=".features.authentication.AuthenticationActivity">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
 
@@ -72,18 +68,22 @@
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
         </activity>
-        <activity android:name=".company.TestingActivity">
+        <activity android:name=".company.CardCompanyActivity">
 
         </activity>
         <activity android:name=".recommend.RecommendActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+
         </activity>
         <activity android:name=".CompanyDetail.CompanyDetailActivity" />
         <activity android:name=".RecommendDetail.RecommendActivity" />
         <activity android:name=".RecommendDetail.RecommendDetailActivity" />
+        <activity android:name=".company.OverviewTaxiActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

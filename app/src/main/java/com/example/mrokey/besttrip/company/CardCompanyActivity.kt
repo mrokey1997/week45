@@ -8,20 +8,17 @@ import com.example.mrokey.besttrip.R
 import com.example.mrokey.besttrip.adapter.ViewPagerAdapter
 import com.example.mrokey.besttrip.entities.Company
 import com.google.firebase.database.DatabaseError
-import kotlinx.android.synthetic.main.activity_authentication.*
-import kotlinx.android.synthetic.main.activity_testing.*
+import kotlinx.android.synthetic.main.activity_card_company.*
 
-class TestingActivity : AppCompatActivity(), CompanyContract.View {
+class CardCompanyActivity : AppCompatActivity(), CompanyContract.View {
 
     private val NUM_PAGE = 8
 
     private var presenter: CompanyContract.Presenter? = null
 
-    private var logos: MutableList<String>? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_testing)
+        setContentView(R.layout.activity_card_company)
 
         presenter = CompanyPresenter(this)
 
@@ -37,7 +34,7 @@ class TestingActivity : AppCompatActivity(), CompanyContract.View {
         for (i in 0 until companies.size) {
             val bundle = Bundle()
             bundle.putString("logo", companies[i].logo)
-            val obj = TestingFragment()
+            val obj = CardCompanyFragment()
             obj.arguments = bundle
             adapter.addFragment(obj, "Taxi")
         }

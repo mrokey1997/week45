@@ -39,5 +39,12 @@
     <string name="name_sample">Vinasun</string>
     <string name="phone_sample">38 27 27 27</string>
     <string name="address_sample">306 Điện Biên Phủ, P.22, Q.Bình Thạnh</string>
+    <string name="seats">seats</string>
+    <string name="fee">Fee Breakdown</string>
+    <string name="open_door">Open door (1km)</string>
+    <string name="vnd">VND</string>
+    <string name="number">9999</string>
+    <string name="over_1km">From 1km to 30km</string>
+    <string name="over_30km">After 30km</string>
 
 </resources>

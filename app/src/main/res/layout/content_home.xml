@@ -10,7 +10,7 @@
         android:id="@+id/toolbarMenu"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/backgroundi"
+        android:background="@color/purple"
         app:layout_constraintHeight_percent="0.35"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

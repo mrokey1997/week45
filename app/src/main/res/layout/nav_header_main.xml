@@ -13,8 +13,6 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <com.makeramen.roundedimageview.RoundedImageView
-
-        android:src="@drawable/ic_taxi"
         android:id="@+id/img_avatar"
         app:riv_corner_radius="30dip"
         app:riv_oval="true"

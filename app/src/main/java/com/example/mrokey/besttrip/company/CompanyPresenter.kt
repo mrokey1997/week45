@@ -25,7 +25,7 @@ class CompanyPresenter(internal var view: CompanyContract.View) : CompanyContrac
                     var listTaxi = ArrayList<Vehicle>()
 
                     for (j in 0 until child.child("vehicle").childrenCount) {
-                        val vehicleChild = child.child("vehicle").child("0")
+                        val vehicleChild = child.child("vehicle").child(j.toString())
                         listTaxi.add(Vehicle(
                                 vehicleChild.child("name").value.toString(),
                                 vehicleChild.child("number_seat").value as Long,

@@ -10,10 +10,10 @@ import com.bumptech.glide.Glide
 import com.example.mrokey.besttrip.R
 
 
-class TestingFragment : Fragment() {
+class CardCompanyFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_testing, container, false)
+        val view = inflater.inflate(R.layout.fragment_card_company, container, false)
 
         val imgLogo = view.findViewById(R.id.img_logo_test) as ImageView
 

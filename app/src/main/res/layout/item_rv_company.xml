@@ -67,8 +67,7 @@
                 android:padding="8dp"
                 android:layout_width="160dp"
                 android:layout_height="100dp"
-                android:contentDescription="@string/empty"
-                android:src="@drawable/sampletaxi" />
+                android:contentDescription="@string/empty" />
 
         </android.support.v7.widget.CardView>
 
