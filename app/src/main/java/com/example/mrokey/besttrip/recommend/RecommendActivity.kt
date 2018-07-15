@@ -1,6 +1,5 @@
 package com.example.mrokey.besttrip.recommend
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import com.example.mrokey.besttrip.R
 import android.support.v7.app.AppCompatActivity
@@ -15,11 +14,17 @@ import com.example.mrokey.besttrip.adapter.SeatsAdapter
 import kotlinx.android.synthetic.main.activity_recommend.*
 
 class RecommendActivity: AppCompatActivity(),RecommendContract.View, View.OnClickListener {
-    private lateinit var presenter: RecommendContract.Presenter
+    var rv4 : RecyclerView? = null
+    var rv5 : RecyclerView? = null
+    var rv7 : RecyclerView? = null
+    var rv8 : RecyclerView? = null
+    private var presenter: RecommendContract.Presenter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recommend)
+        setToolbar()
         presenter = RecommendPresenter(this)
+        setRecyclerView()
         val more4seats = findViewById<TextView>(R.id.more4seats)
         val more5seats = findViewById<TextView>(R.id.more5seats)
         val more7seats = findViewById<TextView>(R.id.more7seats)
@@ -29,43 +34,63 @@ class RecommendActivity: AppCompatActivity(),RecommendContract.View, View.OnClic
         more7seats.setOnClickListener(this)
         more8seats.setOnClickListener(this)
         val bundle = intent.extras
-        if(bundle!=null){
-            var start_location:String?=null
-            var end_location:String?=null
-            var distance:String?=null
-            start_location=   bundle.getString("start_location")
-            end_location=  bundle.getString("end_location")
-            distance=  bundle.getString("distance")
-        }
+        val start = bundle.getString("start_location")
+        val end = bundle.getString("end_location")
+        val distance = bundle.getString("distance")
+        val startToEnd = distance.replace(" km", "").toFloat()
+        startLocation.text = start
+        endLocation.text = end
+        presenter?.getData(start, end, startToEnd)
     }
 
-    @SuppressLint("SetTextI18n")
+    override fun setRecyclerView() {
+        rv4 = findViewById(R.id.rv4_seater)
+        rv4?.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        rv4?.setHasFixedSize(true)
+        rv4?.isNestedScrollingEnabled = false
+        rv5 = findViewById(R.id.rv5_seater)
+        rv5?.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        rv5?.setHasFixedSize(true)
+        rv5?.isNestedScrollingEnabled = false
+        rv7 = findViewById(R.id.rv7_seater)
+        rv7?.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        rv7?.setHasFixedSize(true)
+        rv7?.isNestedScrollingEnabled = false
+        rv8 = findViewById(R.id.rv8_seater)
+        rv8?.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        rv8?.setHasFixedSize(true)
+        rv8?.isNestedScrollingEnabled = false
+    }
+
     override fun onClick(v: View) {
 
         when (v.id) {
 
             R.id.more4seats -> {
-                presenter.getMore(4)
+                presenter?.getMore(4)
             }
 
             R.id.more5seats -> {
-                presenter.getMore(5)
+                presenter?.getMore(5)
             }
 
             R.id.more7seats -> {
-                presenter.getMore(7)
+                presenter?.getMore(7)
             }
 
             R.id.more8seats -> {
-                presenter.getMore(8)
+                presenter?.getMore(8)
             }
         }
     }
-    override fun onResume() {
-        super.onResume()
-        presenter.getData()
-    }
 
+    override fun setToolbar() {
+        setSupportActionBar(tbRecommend)
+        supportActionBar?.title = "Result"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        tbRecommend.setOnClickListener({ finish() })
+    }
     override fun setPresenter(presenter: RecommendContract.Presenter) {
         this.presenter = presenter
     }
@@ -76,62 +101,83 @@ class RecommendActivity: AppCompatActivity(),RecommendContract.View, View.OnClic
 
     override fun setView(taxiFourSeats: ArrayList<Taxi>, taxiFiveSeats: ArrayList<Taxi>,
                          taxiSevenSeats: ArrayList<Taxi>, taxiEightSeats: ArrayList<Taxi>) {
-        val rv4 = findViewById<RecyclerView>(R.id.rv4_seater)
-        rv4.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-        val rv5 = findViewById<RecyclerView>(R.id.rv5_seater)
-        rv5.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-        val rv7 = findViewById<RecyclerView>(R.id.rv7_seater)
-        rv7.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-        val rv8 = findViewById<RecyclerView>(R.id.rv8_seater)
-        rv8.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-
         if (taxiFourSeats.size < 3 ) more4seats.visibility = View.GONE
         if (taxiFiveSeats.size < 3 ) more5seats.visibility = View.GONE
         if (taxiSevenSeats.size < 3 ) more7seats.visibility = View.GONE
         if (taxiEightSeats.size < 3 ) more8seats.visibility = View.GONE
 
         var adapter = SeatsAdapter(2, taxiFourSeats, this@RecommendActivity)
-        rv4.adapter = adapter
+        rv4?.adapter = adapter
         adapter = SeatsAdapter(2, taxiFiveSeats, this@RecommendActivity)
-        rv5.adapter = adapter
+        rv5?.adapter = adapter
         adapter = SeatsAdapter(2, taxiSevenSeats, this@RecommendActivity)
-        rv7.adapter = adapter
+        rv7?.adapter = adapter
         adapter = SeatsAdapter(2, taxiEightSeats, this@RecommendActivity)
-        rv8.adapter = adapter
+        rv8?.adapter = adapter
+        constraint.visibility = View.VISIBLE
     }
+
+    override fun showLoading(isShow: Boolean) {
+        loadRecommend.visibility = if (isShow) View.VISIBLE else View.GONE
+    }
+
     override fun loadMore(seat: Int,taxiSeats: ArrayList<Taxi>,size: Int) {
         when(seat){
             4 -> {
-                val rv4 = findViewById<RecyclerView>(R.id.rv4_seater)
-                rv4.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
                 val adapter = SeatsAdapter(size, taxiSeats, this@RecommendActivity)
-                rv4.adapter = adapter
-                more4seats.text = if(size == 2) "View All"
-                else "Hide"
+                rv4?.adapter = adapter
+                if(size == 2)
+                {
+                    more4seats.text ="View All"
+                    more4seats.isSelected = false
+                }
+                else
+                {
+                    more4seats.text ="Hide"
+                    more4seats.isSelected = true
+                }
             }
             5 -> {
-                val rv5 = findViewById<RecyclerView>(R.id.rv5_seater)
-                rv5.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
                 val adapter = SeatsAdapter(size, taxiSeats, this@RecommendActivity)
-                rv5.adapter = adapter
-                more5seats.text = if(size == 2) "View All"
-                else "Hide"
+                rv5?.adapter = adapter
+                if(size == 2)
+                {
+                    more5seats.text ="View All"
+                    more5seats.isSelected = false
+                }
+                else
+                {
+                    more5seats.text ="Hide"
+                    more5seats.isSelected = true
+                }
             }
             7 -> {
-                val rv7 = findViewById<RecyclerView>(R.id.rv7_seater)
-                rv7.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
                 val adapter = SeatsAdapter(size, taxiSeats, this@RecommendActivity)
-                rv7.adapter = adapter
-                more7seats.text = if(size == 2) "View All"
-                else "Hide"
+                rv7?.adapter = adapter
+                if(size == 2)
+                {
+                    more7seats.text ="View All"
+                    more7seats.isSelected = false
+                }
+                else
+                {
+                    more7seats.text ="Hide"
+                    more7seats.isSelected = true
+                }
             }
             8 -> {
-                val rv8 = findViewById<RecyclerView>(R.id.rv8_seater)
-                rv8.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
                 val adapter = SeatsAdapter(size, taxiSeats, this@RecommendActivity)
-                rv8.adapter = adapter
-                more8seats.text = if(size == 2) "View All"
-                else "Hide"
+                rv8?.adapter = adapter
+                if(size == 2)
+                {
+                    more8seats.text ="View All"
+                    more8seats.isSelected = false
+                }
+                else
+                {
+                    more8seats.text ="Hide"
+                    more8seats.isSelected = true
+                }
             }
         }
     }

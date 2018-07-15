@@ -40,7 +40,7 @@ class SignInFragment: Fragment(), SignInContract.View, GoogleApiClient.OnConnect
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        presenter?.CurrentAccount()
         //Facebook
         mCallbackManager = CallbackManager.Factory.create()
 
@@ -48,24 +48,25 @@ class SignInFragment: Fragment(), SignInContract.View, GoogleApiClient.OnConnect
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_sign_in,container, false)
-
         val btSignIn = view.findViewById(R.id.btSignIn) as Button
         val btEmail = view.findViewById(R.id.btn_email) as Button
         val btFacebook = view.findViewById(R.id.btn_facebook) as Button
-
+        initGoogleSignIn()
         btSignIn.setOnClickListener {
             getAccount()
         }
+
         btEmail.setOnClickListener {
-            initGoogleSignIn()
             signInWithGoogleSignIn()
         }
+
         btFacebook.setOnClickListener {
             presenter?.authWithFacebook()
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"))
         }
         return view
     }
+
     override fun setPresenter(presenter: SignInContract.Presenter) {
         this.presenter = presenter
     }
@@ -97,8 +98,8 @@ class SignInFragment: Fragment(), SignInContract.View, GoogleApiClient.OnConnect
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build()
-        mGoogleApiClient = GoogleApiClient.Builder(context!!)
-                .enableAutoManage(activity!! /* FragmentActivity */, this /* OnConnectionFailedListener */)
+        mGoogleApiClient = GoogleApiClient.Builder(this@SignInFragment.requireContext())
+                .enableAutoManage(this@SignInFragment.requireActivity() /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build()
         mFirebaseAuth = FirebaseAuth.getInstance()
@@ -116,14 +117,22 @@ class SignInFragment: Fragment(), SignInContract.View, GoogleApiClient.OnConnect
                 presenter?.authWithGoogle(account!!)
             }
         }
+
         //Facebook
         mCallbackManager.onActivityResult(requestCode, resultCode, data)
     }
+
     override fun onSuccessLoginFacebook(result: LoginResult?) {
         Toast.makeText(context, "Login Success", Toast.LENGTH_LONG).show()
         startActivity(Intent(activity, HomeActivity::class.java))
     }
     override fun onConnectionFailed(p0: ConnectionResult) {
         Toast.makeText(context, "Google Play Services error.", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mGoogleApiClient?.stopAutoManage(this@SignInFragment.requireActivity())
+        mGoogleApiClient?.disconnect()
     }
 }

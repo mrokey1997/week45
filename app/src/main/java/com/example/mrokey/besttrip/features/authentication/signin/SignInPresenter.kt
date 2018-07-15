@@ -25,6 +25,10 @@ class SignInPresenter(internal var view: SignInContract.View, val callbackManage
         myRef= FirebaseDatabase.getInstance().reference
     }
 
+    override fun CurrentAccount() {
+        if(mAuth?.currentUser!=null)
+            view.getSuccess()
+    }
     override fun checkAccount(email: String, password: String) {
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
             view.showLoading(true)
@@ -58,11 +62,11 @@ class SignInPresenter(internal var view: SignInContract.View, val callbackManage
                         view.getSuccess()
                         message = "success AuthWithGoogle"
                         view.showError(message)
-                        val userId = mAuth?.currentUser!!.uid
-                        val email = mAuth?.currentUser!!.email
-                        val name = mAuth?.currentUser!!.displayName
-                        val url = mAuth?.currentUser!!.photoUrl
-                        val currentUserDb = myRef?.child("trip")?.child("user")?.child(userId)
+                        val userId = mAuth?.currentUser?.uid
+                        val email = mAuth?.currentUser?.email
+                        val name = mAuth?.currentUser?.displayName
+                        //val url = mAuth?.currentUser?.photoUrl.toString()
+                        val currentUserDb = myRef?.child("user")?.child(userId?: return@addOnCompleteListener)
                         currentUserDb?.child("name")?.setValue(name)
                         currentUserDb?.child("email")?.setValue(email)
                         currentUserDb?.child("uid")?.setValue(userId)
@@ -78,13 +82,9 @@ class SignInPresenter(internal var view: SignInContract.View, val callbackManage
             override fun onSuccess(result: LoginResult?) {
                 view.onSuccessLoginFacebook(result)
             }
-
             override fun onCancel() {
-
             }
-
             override fun onError(error: FacebookException?) {
-
             }
         })
     }

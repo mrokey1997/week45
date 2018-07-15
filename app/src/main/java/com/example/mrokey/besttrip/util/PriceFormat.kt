@@ -1,17 +1,20 @@
 package com.example.mrokey.besttrip.util
 
 object PriceFormat {
-    fun priceFormat(price: Int): String {
-        return if (price > 999) {
-            val mod = price % 1000
-            val div = price / 1000
-            when {
-                mod in 10..99 -> div.toString() + ".0" + mod.toString()
-                mod < 10 -> div.toString() + ".00" + mod.toString()
-                else -> div.toString() + "." + mod.toString()
+    fun priceFormat(price: Float): String {
+        var format:Int = (price*1000).toInt()
+        var mod: Int
+        var result = ""
+        while(format>999){
+            mod = format % 1000
+            result = when {
+                mod in 10..99 -> result + ".0" + mod.toString()
+                mod < 10 -> result + ".00" + mod.toString()
+                else -> result + "." + mod.toString()
             }
-        } else {
-            price.toString()
+            format /= 1000
         }
+        result = format.toString() + result
+        return result
     }
 }

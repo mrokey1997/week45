@@ -1,13 +1,15 @@
 package com.example.mrokey.besttrip.company
 
 import com.example.mrokey.besttrip.entities.Company
-import com.example.mrokey.besttrip.features.authentication.signin.SignInContract
+import com.google.firebase.database.DatabaseError
 
 interface CompanyContract {
     interface View {
         fun setPresenter(presenter: Presenter)
 
         fun onDataChange(companies: ArrayList<Company>)
+
+        fun onCancelled(p0: DatabaseError)
     }
 
     interface Presenter {

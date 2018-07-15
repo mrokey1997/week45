@@ -22,21 +22,19 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".welcome.WelcomeActivity">
-
-        </activity>
+        <activity android:name=".welcome.WelcomeActivity" />
         <activity android:name=".features.search.SearchActivity" />
         <activity android:name=".features.authentication.forgot.ForgotPasswordActivity" />
         <activity android:name=".home.HomeActivity">
 
         </activity>
-        <activity android:name=".features.authentication.AuthenticationActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".features.authentication.AuthenticationActivity">
+
+
+
         </activity>
+
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -68,6 +66,21 @@
 
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".company.CardCompanyActivity">
+
+        </activity>
+        <activity android:name=".recommend.RecommendActivity" >
+
+        </activity>
+        <activity android:name=".detail.CompanyDetailActivity" />
+        <activity android:name=".detail.RecommendDetailActivity" />
+        <activity android:name=".company.OverviewTaxiActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
