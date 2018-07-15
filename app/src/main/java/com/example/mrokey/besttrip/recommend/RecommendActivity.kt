@@ -28,6 +28,15 @@ class RecommendActivity: AppCompatActivity(),RecommendContract.View, View.OnClic
         more5seats.setOnClickListener(this)
         more7seats.setOnClickListener(this)
         more8seats.setOnClickListener(this)
+        val bundle = intent.extras
+        if(bundle!=null){
+            var start_location:String?=null
+            var end_location:String?=null
+            var distance:String?=null
+            start_location=   bundle.getString("start_location")
+            end_location=  bundle.getString("end_location")
+            distance=  bundle.getString("distance")
+        }
     }
 
     @SuppressLint("SetTextI18n")
