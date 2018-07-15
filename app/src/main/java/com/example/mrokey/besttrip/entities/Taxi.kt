@@ -5,6 +5,8 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Taxi(
+        val start: String,
+        val end: String,
         val company: String,
         val phone: String,
         val price: String,

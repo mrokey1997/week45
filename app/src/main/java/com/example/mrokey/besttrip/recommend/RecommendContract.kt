@@ -12,9 +12,14 @@ interface RecommendContract {
                     taxiSevenSeats: ArrayList<Taxi>, taxiEightSeats: ArrayList<Taxi> )
         fun loadMore(seat: Int,taxiSeats: ArrayList<Taxi>, size: Int)
 
+        fun setToolbar()
+
+        fun setRecyclerView()
+
+        fun showLoading(isShow: Boolean)
     }
     interface Presenter {
-        fun getData()
+        fun getData(start: String, end: String, distance: Float)
 
         fun getMore(seat: Int)
     }
