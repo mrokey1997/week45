@@ -27,4 +27,5 @@
     <color name="colorListDivider">#e6e6e6</color>
 
     <color name="transparent">#00ffffff</color>
+    <color name="colorToolbar">#455a64</color>
 </resources>

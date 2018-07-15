@@ -74,9 +74,8 @@
         <activity android:name=".recommend.RecommendActivity" >
 
         </activity>
-        <activity android:name=".CompanyDetail.CompanyDetailActivity" />
-        <activity android:name=".RecommendDetail.RecommendActivity" />
-        <activity android:name=".RecommendDetail.RecommendDetailActivity" />
+        <activity android:name=".detail.CompanyDetailActivity" />
+        <activity android:name=".detail.RecommendDetailActivity" />
         <activity android:name=".company.OverviewTaxiActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
