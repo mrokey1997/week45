@@ -46,5 +46,8 @@
     <string name="number">9999</string>
     <string name="over_1km">From 1km to 30km</string>
     <string name="over_30km">After 30km</string>
+    <string name="sample_address">No. 160, Street 20, Ward 5, Go Vap District</string>
+    <string name="where">Where you heading?</string>
+    <string name="welcome">Welcome,</string>
 
 </resources>

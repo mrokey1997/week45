@@ -28,10 +28,10 @@ class CompanyPresenter(internal var view: CompanyContract.View) : CompanyContrac
                         val vehicleChild = child.child("vehicle").child(j.toString())
                         listTaxi.add(Vehicle(
                                 vehicleChild.child("name").value.toString(),
-                                vehicleChild.child("number_seat").value as Long,
-                                vehicleChild.child("_1km").value as Long,
-                                vehicleChild.child("over_1km").value as Double,
-                                vehicleChild.child("over_30km").value as Double
+                                vehicleChild.child("number_seat").value.toString().toLong(),
+                                vehicleChild.child("_1km").value.toString().toLong(),
+                                vehicleChild.child("over_1km").value.toString().toDouble(),
+                                vehicleChild.child("over_30km").value.toString().toDouble()
                         ))
                     }
                     listCompany.add(Company(
@@ -39,7 +39,7 @@ class CompanyPresenter(internal var view: CompanyContract.View) : CompanyContrac
                             child.child("address").value.toString(),
                             child.child("phone").value.toString(),
                             listTaxi,
-                            child.child("wait_time").value as Long,
+                            child.child("wait_time").value.toString().toLong(),
                             child.child("logo").value.toString()
                     ))
                 }

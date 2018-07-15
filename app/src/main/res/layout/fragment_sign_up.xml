@@ -63,6 +63,39 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="1dp"
+        android:layout_height="126dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/green"
+        app:layout_constraintEnd_toStartOf="@+id/view_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="300dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="60dp"
+        android:background="@color/orange"
+        app:layout_constraintEnd_toStartOf="@+id/view_parent"
+        app:layout_constraintHorizontal_bias="0.22"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="300dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="104dp"
+        android:background="@color/orange"
+        app:layout_constraintEnd_toStartOf="@+id/view_parent"
+        app:layout_constraintHorizontal_bias="0.22"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <Button
         android:id="@+id/btSignUp"
         android:layout_width="200dp"
