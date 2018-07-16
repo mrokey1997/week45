@@ -59,7 +59,10 @@ class HomeActivity : AppCompatActivity(),HomeContract.View, NavigationView.OnNav
     override fun setView(name: String, email: String, url: String) {
         tv_name.text = name
         nav_view.tv_name.text = name
-        nav_view.tv_email.text = email
+        if(email != "null") {
+            nav_view.tv_email.text = email
+        }
+        else nav_view.tv_email.visibility = View.GONE
         Glide.with(this)
                 .load(url)
                 .into(nav_view.img_avatar)

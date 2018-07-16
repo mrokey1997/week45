@@ -14,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 
+
 class SignInPresenter(internal var view: SignInContract.View, val callbackManager: CallbackManager) : SignInContract.Presenter {
 
     private var myRef: DatabaseReference? = null
@@ -80,6 +81,7 @@ class SignInPresenter(internal var view: SignInContract.View, val callbackManage
                     }
                 }
     }
+
     override fun authWithFacebook() {
         LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(result: LoginResult?) {

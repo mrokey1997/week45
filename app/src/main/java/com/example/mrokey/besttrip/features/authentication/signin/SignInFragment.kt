@@ -52,7 +52,6 @@ class SignInFragment: Fragment(), SignInContract.View, GoogleApiClient.OnConnect
         btEmail.setOnClickListener {
             signInWithGoogleSignIn()
         }
-
         btFacebook.setOnClickListener {
             presenter?.authWithFacebook()
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"))
@@ -116,6 +115,7 @@ class SignInFragment: Fragment(), SignInContract.View, GoogleApiClient.OnConnect
         //Facebook
         else mCallbackManager.onActivityResult(requestCode, resultCode, data)
     }
+
 
     override fun onSuccessLoginFacebook(result: LoginResult?) {
         Toast.makeText(context, "Login Success", Toast.LENGTH_LONG).show()

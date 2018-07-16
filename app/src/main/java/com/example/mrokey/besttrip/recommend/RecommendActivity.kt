@@ -38,7 +38,6 @@ class RecommendActivity: AppCompatActivity(),RecommendContract.View, View.OnClic
         val end = bundle.getString("end_location")
         val distance = bundle.getString("distance")
         val startToEnd = distance.replace(" km", "")
-                .replace(".", "")
                 .replace(",", "").toFloat()
         startLocation.text = start
         endLocation.text = end
