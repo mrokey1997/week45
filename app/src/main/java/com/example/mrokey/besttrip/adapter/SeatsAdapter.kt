@@ -11,7 +11,7 @@ import com.example.mrokey.besttrip.R
 import kotlinx.android.synthetic.main.item_recommend.view.*
 import android.content.Intent
 import android.os.Bundle
-import com.example.mrokey.besttrip.detail.recommend.RecommendDetailActivity
+import com.example.mrokey.besttrip.detail.RecommendDetailActivity
 import android.view.animation.AnimationUtils
 import android.app.ActivityOptions
 

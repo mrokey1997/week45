@@ -1,12 +1,11 @@
-package com.example.mrokey.besttrip.detail.recommend
+package com.example.mrokey.besttrip.detail
 
-import android.util.Log
 import com.example.mrokey.besttrip.entities.Taxi
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
-class RecommendDetailPresenter(internal var view: RecommendDetailContract.View): RecommendDetailContract.Presenter{
+class RecommendDetailPresenter(internal var view: RecommendDetailContract.View): RecommendDetailContract.Presenter {
     var myRef: DatabaseReference? = null
     var mAuth: FirebaseAuth? = null
     init {
