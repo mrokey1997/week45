@@ -17,9 +17,7 @@ Time spent: 60 hours spent in total
 
 ## Video Walkthrough
 
-Here's a walkthrough of implemented user stories:
-
-<img src='https://i.imgur.com/ppOxPKK.gif' title='Video Walkthrough' width='' alt='Video Walkthrough'/>
+Click [here](https://youtu.be/FwUcMW14Tco) for watching walkthrough of implemented user stories.
 
 ## Open-source libraries used
 
