@@ -79,7 +79,7 @@ import kotlinx.android.synthetic.main.activity_direction.*
                 Log.d("abc","place")
             }
         })
-        img_back.setOnClickListener(View.OnClickListener {
+        img_back.setOnClickListener({
             if(end_latitude==null){
                 Toast.makeText(this,"vui lòng chọn địa điểm",Toast.LENGTH_SHORT).show()
             }else{

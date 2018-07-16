@@ -110,20 +110,24 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.
                 txt_start.setText(start_location)
             }
             else{
-               // markerpoint.add(current_location)
             }
 
             end_location=bundle.getString("end_location")
             markerpoint.add(LatLng(bundle.getDouble("end_latitude"),bundle.getDouble("end_longitude")))
             bottomSheetBehavior.state=BottomSheetBehavior.STATE_EXPANDED
             txt_end.setText(end_location)
+            if(type=="walking"){
+                img_type.setImageDrawable(ContextCompat.getDrawable(applicationContext,R.drawable.ic_directions_walk))
+                img_start.setImageDrawable(ContextCompat.getDrawable(applicationContext,R.drawable.ic_while))
+            }
+
         }
         ic_direction.setOnClickListener(View.OnClickListener {
             startActivity(Intent(this,DirectionActivity::class.java))
 
         })
         img_start.setOnClickListener {
-            if(type!=null){
+            if(type=="driving"){
                 val intent=Intent(this,RecommendActivity::class.java)
                 val mBundle = Bundle()
                 mBundle.putString("distance", distance)
