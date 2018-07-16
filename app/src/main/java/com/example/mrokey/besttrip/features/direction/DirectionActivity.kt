@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.example.mrokey.besttrip.R
 import com.example.mrokey.besttrip.features.search.SearchActivity
@@ -13,7 +14,6 @@ import com.google.android.gms.location.places.Place
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment
 import com.google.android.gms.location.places.ui.PlaceSelectionListener
 import kotlinx.android.synthetic.main.activity_direction.*
-
  class DirectionActivity : AppCompatActivity() {
     var start_latitude: Double? =null
     var start_longitude:Double?=null
@@ -79,7 +79,7 @@ import kotlinx.android.synthetic.main.activity_direction.*
                 Log.d("abc","place")
             }
         })
-        img_back.setOnClickListener {
+        img_back.setOnClickListener({
             if(end_latitude==null){
                 Toast.makeText(this,"vui lòng chọn địa điểm",Toast.LENGTH_SHORT).show()
             }else{
@@ -91,7 +91,7 @@ import kotlinx.android.synthetic.main.activity_direction.*
                 mBundle.putDouble("end_latitude",end_latitude!!)
                 mBundle.putDouble("end_longitude",end_longitude!!)
                 mBundle.putString("end_location",end_location);
-                if(check){
+                if(check==true){
                     mBundle.putDouble("start_latitude",start_latitude!!)
                     mBundle.putString("start_location",start_location);
                     mBundle.putDouble("start_longitude",start_longitude!!)
@@ -99,6 +99,6 @@ import kotlinx.android.synthetic.main.activity_direction.*
                 intent.putExtras(mBundle)
                 startActivity(intent)
             }
-        }
+        })
     }
 }
