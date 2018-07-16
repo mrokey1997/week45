@@ -107,7 +107,9 @@ class SignInFragment: Fragment(), SignInContract.View, GoogleApiClient.OnConnect
             val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
             if (result.isSuccess) {
                 val account = result.signInAccount
-                presenter?.authWithGoogle(account!!)
+                if (account != null) {
+                    presenter?.authWithGoogle(account)
+                }
             }
         }
 
