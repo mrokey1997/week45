@@ -141,7 +141,6 @@
         android:background="@drawable/ic_facebooktwo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
     <Button
         android:id="@+id/btn_email"
         android:layout_width="50dp"
