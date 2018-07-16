@@ -3,9 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/backgroundParent</item>
-        <item name="colorPrimaryDark">@color/backgroundChildren</item>
-        <item name="colorAccent">@color/white</item>
+        <item name="colorPrimary">@color/lightShrinePink</item>
+        <item name="colorPrimaryDark">@color/darkShrinePink</item>
+        <item name="colorAccent">@color/darkShrinePink</item>
     </style>
     <style name="TransparentTheme" parent="AppTheme">
         <item name="android:windowBackground">@color/colorTransparent</item>
