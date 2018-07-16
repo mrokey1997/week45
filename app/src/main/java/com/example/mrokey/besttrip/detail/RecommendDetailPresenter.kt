@@ -14,6 +14,8 @@ class RecommendDetailPresenter(internal var view: RecommendDetailContract.View):
         mAuth = FirebaseAuth.getInstance()
     }
     override fun storeInfo(taxi: Taxi) {
-        myRef?.child(mAuth?.currentUser?.uid.toString())?.child("recent_trip")?.setValue(taxi)
+        if(mAuth!=null && mAuth?.currentUser!=null) {
+            myRef?.child(mAuth!!.currentUser!!.uid)?.child("recent_trip")?.setValue(taxi)
+        }
     }
 }

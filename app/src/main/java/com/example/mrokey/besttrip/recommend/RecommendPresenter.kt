@@ -36,7 +36,6 @@ class RecommendPresenter(internal var view: RecommendContract.View): RecommendCo
                         val logo = data.child("logo").value.toString()
                         val child = data.child("vehicle")
                         var j = 0
-
                         while(j<child.childrenCount) {
                             val vehicle = child.child(j.toString()).getValue<Vehicle>(Vehicle::class.java)
                             if (vehicle!=null) {
@@ -75,9 +74,7 @@ class RecommendPresenter(internal var view: RecommendContract.View): RecommendCo
                     handler.post({
                         view.showLoading(false)
                         view.setView(taxiFourSeats,taxiFiveSeats,taxiSevenSeats,taxiEightSeats)})
-
                 }.start()
-
             }
             override fun onCancelled(databaseError: DatabaseError) {
                 view.showError("The read failed: " + databaseError.code)

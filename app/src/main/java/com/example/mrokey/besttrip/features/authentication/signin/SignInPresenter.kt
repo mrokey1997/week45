@@ -1,6 +1,7 @@
 package com.example.mrokey.besttrip.features.authentication.signin
 
 import android.content.ContentValues
+import android.os.Looper
 import android.text.TextUtils
 import android.util.Log
 import com.facebook.CallbackManager
@@ -59,25 +60,26 @@ class SignInPresenter(internal var view: SignInContract.View, val callbackManage
         view.showLoading(true)
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
         mAuth?.signInWithCredential(credential)?.addOnCompleteListener{ task ->
-                    val message: String
                     if (task.isSuccessful) {
-                        view.getSuccess()
-                        message = "success AuthWithGoogle"
-                        view.showError(message)
-                        val userId = mAuth?.currentUser?.uid
-                        val email = mAuth?.currentUser?.email
-                        val name = mAuth?.currentUser?.displayName
-                        val url = mAuth?.currentUser?.photoUrl.toString()
-                        val currentUserDb = myRef?.child("user")?.child(userId?: return@addOnCompleteListener)
-                        currentUserDb?.child("name")?.setValue(name)
-                        currentUserDb?.child("email")?.setValue(email)
-                        currentUserDb?.child("uid")?.setValue(userId)
-                        currentUserDb?.child("url")?.setValue(url)
-                        view.showLoading(false)
-
+                        Thread{
+                            val userId = mAuth?.currentUser?.uid
+                            val email = mAuth?.currentUser?.email
+                            val name = mAuth?.currentUser?.displayName
+                            val url = mAuth?.currentUser?.photoUrl.toString()
+                            val currentUserDb = myRef?.child("user")?.child(userId?: return@Thread)
+                            currentUserDb?.child("name")?.setValue(name)
+                            currentUserDb?.child("email")?.setValue(email)
+                            currentUserDb?.child("uid")?.setValue(userId)
+                            currentUserDb?.child("url")?.setValue(url)
+                            val handler = android.os.Handler(Looper.getMainLooper())
+                            handler.post({
+                                view.getSuccess()
+                                view.showError("success AuthWithGoogle")
+                                view.showLoading(false)
+                            })
+                        }.start()
                     } else {
-                        message = "fail AuthWithGoogle"
-                        view.showError(message)
+                        view.showError("fail AuthWithGoogle")
                     }
                 }
     }

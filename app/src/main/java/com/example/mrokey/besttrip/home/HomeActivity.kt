@@ -18,7 +18,7 @@ import com.example.mrokey.besttrip.callbacks.GetUserCallback
 import com.example.mrokey.besttrip.company.OverviewTaxiActivity
 import com.example.mrokey.besttrip.entities.User
 import com.example.mrokey.besttrip.features.authentication.AuthenticationActivity
-import com.example.mrokey.besttrip.features.direction.DirectionActivity
+
 import com.example.mrokey.besttrip.features.search.SearchActivity
 import com.example.mrokey.besttrip.requests.UserRequest
 import com.google.firebase.auth.FirebaseAuth
@@ -27,7 +27,6 @@ import kotlinx.android.synthetic.main.content_home.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 
 class HomeActivity : AppCompatActivity(),HomeContract.View, NavigationView.OnNavigationItemSelectedListener, GetUserCallback.IGetUserResponse {
-
     var mAuth: FirebaseAuth? = null
     private var presenter: HomeContract.Presenter? = null
 
@@ -57,15 +56,16 @@ class HomeActivity : AppCompatActivity(),HomeContract.View, NavigationView.OnNav
     }
 
     override fun setView(name: String, email: String, url: String) {
-        tv_name.text = name
-        nav_view.tv_name.text = name
-        if(email != "null") {
-            nav_view.tv_email.text = email
+        tv_name?.text = name
+        if(nav_view!=null) {
+            nav_view.tv_name?.text = name
+            if (email != "null") {
+                nav_view.tv_email.text = email
+            } else nav_view.tv_email?.visibility = View.GONE
+            Glide.with(this)
+                    .load(url)
+                    .into(nav_view.img_avatar)
         }
-        else nav_view.tv_email.visibility = View.GONE
-        Glide.with(this)
-                .load(url)
-                .into(nav_view.img_avatar)
     }
 
     override fun onBackPressed() {
