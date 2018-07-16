@@ -17,6 +17,7 @@ import com.example.mrokey.besttrip.callbacks.GetUserCallback
 import com.example.mrokey.besttrip.company.OverviewTaxiActivity
 import com.example.mrokey.besttrip.entities.User
 import com.example.mrokey.besttrip.features.authentication.AuthenticationActivity
+import com.example.mrokey.besttrip.features.direction.DirectionActivity
 import com.example.mrokey.besttrip.features.search.SearchActivity
 import com.example.mrokey.besttrip.requests.UserRequest
 import com.google.firebase.auth.FirebaseAuth

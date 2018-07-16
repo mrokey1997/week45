@@ -46,9 +46,9 @@ import kotlinx.android.synthetic.main.activity_direction.*
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         val place_start = fragmentManager.findFragmentById(R.id.place_start) as PlaceAutocompleteFragment
-        place_start.setHint("Vị trí của bạn")
+        place_start.setHint("Your location")
         val place_end = fragmentManager.findFragmentById(R.id.place_end) as PlaceAutocompleteFragment
-        place_end.setHint("Chọn điểm đến")
+        place_end.setHint("Choose destination")
         place_start.setOnPlaceSelectedListener(object:PlaceSelectionListener{
             override fun onPlaceSelected(place: Place?) {
                 if (place != null) {
@@ -79,9 +79,9 @@ import kotlinx.android.synthetic.main.activity_direction.*
                 Log.d("abc","place")
             }
         })
-        img_back.setOnClickListener({
+        img_back.setOnClickListener {
             if(end_latitude==null){
-                Toast.makeText(this,"vui lòng chọn địa điểm",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"Please choose destination",Toast.LENGTH_SHORT).show()
             }else{
                 val intent=Intent(this,SearchActivity::class.java)
                 // var bundle:Bundle
@@ -99,6 +99,6 @@ import kotlinx.android.synthetic.main.activity_direction.*
                 intent.putExtras(mBundle)
                 startActivity(intent)
             }
-        })
+        }
     }
 }

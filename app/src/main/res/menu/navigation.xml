@@ -11,5 +11,4 @@
         android:icon="@drawable/ic_directions_walk"
         android:title="@string/title_dashboard" />
 
-
 </menu>

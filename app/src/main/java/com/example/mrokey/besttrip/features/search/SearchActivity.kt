@@ -166,6 +166,10 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.
                     )
                 }
             }
+            if(distance==null){
+                bottomSheetBehavior.state=BottomSheetBehavior.STATE_HIDDEN
+            }
+
         } catch (e: Exception) {
             Log.d("onResponse", "There is an error")
             e.printStackTrace()

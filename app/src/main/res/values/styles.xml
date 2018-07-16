@@ -57,4 +57,10 @@
         <!--<item name="android:textColor">#da7c80b8</item>-->
         <item name="android:textColor">#ffffff</item>
     </style>
+
+    <style name="NavigationStyle" parent="Widget.Design.BottomNavigationView">
+        <item name="colorPrimary">@color/lightShrinePink</item>
+        <item name="colorPrimaryDark">@color/darkShrinePink</item>
+        <item name="android:colorAccent">@color/darkBrown</item>
+    </style>
 </resources>

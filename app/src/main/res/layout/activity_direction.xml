@@ -36,22 +36,22 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:background="?android:attr/windowBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/darkBrown"
         app:layout_constraintTop_toBottomOf="@+id/place_end"
         app:menu="@menu/navigation" />
 
     <ImageView
         android:id="@+id/img_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="252dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/navigation"
-        app:srcCompat="@drawable/ic_directions" />
+        app:srcCompat="@drawable/ic_direction_white" />
 
     <!--<ImageView-->
         <!--android:id="@+id/imageView3"-->
