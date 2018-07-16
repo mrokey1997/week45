@@ -57,6 +57,7 @@ class SignInFragment: Fragment(), SignInContract.View, GoogleApiClient.OnConnect
             presenter?.authWithFacebook()
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"))
         }
+
         return view
     }
 
@@ -101,6 +102,7 @@ class SignInFragment: Fragment(), SignInContract.View, GoogleApiClient.OnConnect
         val signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient)
         startActivityForResult(signInIntent, GOOGLE_SIGN_IN_REQUEST_CODE)
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == GOOGLE_SIGN_IN_REQUEST_CODE) {

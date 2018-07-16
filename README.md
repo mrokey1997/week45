@@ -19,6 +19,8 @@ Time spent: 60 hours spent in total
 
 Here's a walkthrough of implemented user stories:
 
+<img src='https://i.imgur.com/ppOxPKK.gif' title='Video Walkthrough' width='' alt='Video Walkthrough'/>
+
 ## Open-source libraries used
 
 - [Retrofit](http://square.github.io/retrofit/) - A type-safe HTTP client for Android and Java
