@@ -1,6 +1,5 @@
 package com.example.mrokey.besttrip.recommend
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import com.example.mrokey.besttrip.R
 import android.support.v7.app.AppCompatActivity
@@ -90,7 +89,15 @@ class RecommendActivity: AppCompatActivity(),RecommendContract.View, View.OnClic
         supportActionBar?.title = "Result"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        tbRecommend.setOnClickListener({ finish() })
+        tbRecommend.setNavigationOnClickListener({
+            onBackPressed()
+            this.overridePendingTransition(0, R.anim.back_right)
+        })
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        this.overridePendingTransition(0, R.anim.back_right)
     }
     override fun setPresenter(presenter: RecommendContract.Presenter) {
         this.presenter = presenter
@@ -107,13 +114,13 @@ class RecommendActivity: AppCompatActivity(),RecommendContract.View, View.OnClic
         if (taxiSevenSeats.size < 3 ) more7seats.visibility = View.GONE
         if (taxiEightSeats.size < 3 ) more8seats.visibility = View.GONE
 
-        var adapter = SeatsAdapter(2, taxiFourSeats, this@RecommendActivity)
+        var adapter = SeatsAdapter(2, taxiFourSeats, this@RecommendActivity,0)
         rv4?.adapter = adapter
-        adapter = SeatsAdapter(2, taxiFiveSeats, this@RecommendActivity)
+        adapter = SeatsAdapter(2, taxiFiveSeats, this@RecommendActivity,0)
         rv5?.adapter = adapter
-        adapter = SeatsAdapter(2, taxiSevenSeats, this@RecommendActivity)
+        adapter = SeatsAdapter(2, taxiSevenSeats, this@RecommendActivity,0)
         rv7?.adapter = adapter
-        adapter = SeatsAdapter(2, taxiEightSeats, this@RecommendActivity)
+        adapter = SeatsAdapter(2, taxiEightSeats, this@RecommendActivity,0)
         rv8?.adapter = adapter
         constraint.visibility = View.VISIBLE
     }
@@ -122,62 +129,69 @@ class RecommendActivity: AppCompatActivity(),RecommendContract.View, View.OnClic
         loadRecommend.visibility = if (isShow) View.VISIBLE else View.GONE
     }
 
-    @SuppressLint("SetTextI18n")
-    override fun loadMore(seat: Int, taxiSeats: ArrayList<Taxi>, size: Int) {
+    override fun loadMore(seat: Int,taxiSeats: ArrayList<Taxi>,size: Int) {
         when(seat){
             4 -> {
-                val adapter = SeatsAdapter(size, taxiSeats, this@RecommendActivity)
-                rv4?.adapter = adapter
                 if(size == 2)
                 {
-                    more4seats.text ="View All"
+                    val adapter = SeatsAdapter(size, taxiSeats, this@RecommendActivity,0)
+                    rv4?.adapter = adapter
+                    more4seats.text =getString(R.string.view)
                     more4seats.isSelected = false
                 }
                 else
                 {
-                    more4seats.text ="Hide"
+                    val adapter = SeatsAdapter(size, taxiSeats, this@RecommendActivity,1)
+                    rv4?.adapter = adapter
+                    more4seats.text =getString(R.string.hide)
                     more4seats.isSelected = true
                 }
             }
             5 -> {
-                val adapter = SeatsAdapter(size, taxiSeats, this@RecommendActivity)
-                rv5?.adapter = adapter
                 if(size == 2)
                 {
-                    more5seats.text ="View All"
+                    val adapter = SeatsAdapter(size, taxiSeats, this@RecommendActivity,0)
+                    rv5?.adapter = adapter
+                    more5seats.text =getString(R.string.view)
                     more5seats.isSelected = false
                 }
                 else
                 {
-                    more5seats.text ="Hide"
+                    val adapter = SeatsAdapter(size, taxiSeats, this@RecommendActivity,1)
+                    rv5?.adapter = adapter
+                    more5seats.text =getString(R.string.hide)
                     more5seats.isSelected = true
                 }
             }
             7 -> {
-                val adapter = SeatsAdapter(size, taxiSeats, this@RecommendActivity)
-                rv7?.adapter = adapter
                 if(size == 2)
                 {
-                    more7seats.text ="View All"
+                    val adapter = SeatsAdapter(size, taxiSeats, this@RecommendActivity,0)
+                    rv7?.adapter = adapter
+                    more7seats.text =getString(R.string.view)
                     more7seats.isSelected = false
                 }
                 else
                 {
-                    more7seats.text ="Hide"
+                    val adapter = SeatsAdapter(size, taxiSeats, this@RecommendActivity,1)
+                    rv7?.adapter = adapter
+                    more7seats.text =getString(R.string.hide)
                     more7seats.isSelected = true
                 }
             }
             8 -> {
-                val adapter = SeatsAdapter(size, taxiSeats, this@RecommendActivity)
-                rv8?.adapter = adapter
                 if(size == 2)
                 {
-                    more8seats.text ="View All"
+                    val adapter = SeatsAdapter(size, taxiSeats, this@RecommendActivity,0)
+                    rv8?.adapter = adapter
+                    more8seats.text =getString(R.string.view)
                     more8seats.isSelected = false
                 }
                 else
                 {
-                    more8seats.text ="Hide"
+                    val adapter = SeatsAdapter(size, taxiSeats, this@RecommendActivity,1)
+                    rv8?.adapter = adapter
+                    more8seats.text =getString(R.string.hide)
                     more8seats.isSelected = true
                 }
             }

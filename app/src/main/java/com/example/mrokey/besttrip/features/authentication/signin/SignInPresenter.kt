@@ -25,7 +25,7 @@ class SignInPresenter(internal var view: SignInContract.View, val callbackManage
         myRef= FirebaseDatabase.getInstance().reference
     }
 
-    override fun CurrentAccount() {
+    override fun currentAccount() {
         if(mAuth?.currentUser!=null)
             view.getSuccess()
     }
@@ -55,6 +55,7 @@ class SignInPresenter(internal var view: SignInContract.View, val callbackManage
     }
     //SignIn with Google mail
     override fun authWithGoogle(acct: GoogleSignInAccount) {
+        view.showLoading(true)
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
         mAuth?.signInWithCredential(credential)?.addOnCompleteListener{ task ->
                     val message: String
@@ -65,12 +66,14 @@ class SignInPresenter(internal var view: SignInContract.View, val callbackManage
                         val userId = mAuth?.currentUser?.uid
                         val email = mAuth?.currentUser?.email
                         val name = mAuth?.currentUser?.displayName
-                        //val url = mAuth?.currentUser?.photoUrl.toString()
+                        val url = mAuth?.currentUser?.photoUrl.toString()
                         val currentUserDb = myRef?.child("user")?.child(userId?: return@addOnCompleteListener)
                         currentUserDb?.child("name")?.setValue(name)
                         currentUserDb?.child("email")?.setValue(email)
                         currentUserDb?.child("uid")?.setValue(userId)
-                        //currentUserDb?.child("url")?.setValue(url)
+                        currentUserDb?.child("url")?.setValue(url)
+                        view.showLoading(false)
+
                     } else {
                         message = "fail AuthWithGoogle"
                         view.showError(message)

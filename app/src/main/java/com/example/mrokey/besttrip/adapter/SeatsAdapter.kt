@@ -11,14 +11,19 @@ import com.example.mrokey.besttrip.R
 import kotlinx.android.synthetic.main.item_recommend.view.*
 import android.content.Intent
 import android.os.Bundle
-import com.example.mrokey.besttrip.detail.RecommendDetailActivity
+import com.example.mrokey.besttrip.detail.recommend.RecommendDetailActivity
+import android.view.animation.AnimationUtils
+import android.app.ActivityOptions
 
 
-class SeatsAdapter(val size: Int, var items : ArrayList<Taxi>, val context: Context) : RecyclerView.Adapter<SeatsAdapter.ViewHolder>() {
-    // Gets the number of animals in the list
+
+/**
+ * anim = 1 : run animation
+ */
+class SeatsAdapter(val size: Int, var items : ArrayList<Taxi>, val context: Context,val anim: Int) : RecyclerView.Adapter<SeatsAdapter.ViewHolder>() {
     fun setData(taxi: ArrayList<Taxi>) {
         items = taxi
-        notifyDataSetChanged()
+        notifyItemRangeInserted(2,size)
     }
     override fun getItemCount(): Int {
         return size
@@ -35,19 +40,28 @@ class SeatsAdapter(val size: Int, var items : ArrayList<Taxi>, val context: Cont
         holder.company.text = items[position].company
         holder.price.text = items[position].price
         holder.phone.text = items[position].phone
-        holder.itemView.setOnClickListener {
+        holder.itemView.setOnClickListener({
             val intent = Intent(context, RecommendDetailActivity::class.java)
             val bundle = Bundle()
             bundle.putParcelable("taxi",items[position])
             intent.putExtra("myBundle",bundle)
-            context.startActivity(intent)
-        }
+            val options = ActivityOptions.makeCustomAnimation(context, R.anim.right_to_left, 0)
+            context.startActivity(intent,options.toBundle())
+        })
+        if (anim == 1) setAnimation(holder.itemView,position)
     }
     class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.tvName
         val company : TextView = view.tvCompany
         val phone: TextView = view.tvPhone
         val price: TextView = view.tvPrice
+    }
+
+    private fun setAnimation(viewToAnimate: View, position: Int) {
+        if (position > 1) {
+            val animation = AnimationUtils.loadAnimation(context, R.anim.from_bottom)
+            viewToAnimate.startAnimation(animation)
+        }
     }
 }
 

@@ -33,11 +33,11 @@ class SignInFragment: Fragment(), SignInContract.View, GoogleApiClient.OnConnect
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter?.CurrentAccount()
+
         //Facebook
         mCallbackManager = CallbackManager.Factory.create()
-
         presenter = SignInPresenter(this, mCallbackManager)
+        presenter?.currentAccount()
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_sign_in,container, false)
