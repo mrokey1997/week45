@@ -75,16 +75,12 @@
         <activity android:name=".company.CardCompanyActivity">
 
         </activity>
-        <activity android:name=".recommend.RecommendActivity" >
-
-        </activity>
-        <activity android:name=".detail.CompanyDetailActivity" />
         <activity android:name=".detail.RecommendDetailActivity" />
         <activity android:name=".company.OverviewTaxiActivity" >
 
         </activity>
         <activity android:name=".features.direction.DirectionActivity" />
-        <activity android:name=".detail.recommend.RecommendDetailActivity" />
+        <activity android:name=".recommend.RecommendActivity" />
     </application>
 
 </manifest>

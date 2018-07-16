@@ -1,4 +1,4 @@
-package com.example.mrokey.besttrip.detail.recommend
+package com.example.mrokey.besttrip.detail
 
 import com.example.mrokey.besttrip.entities.Taxi
 

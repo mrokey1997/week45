@@ -1,4 +1,4 @@
-package com.example.mrokey.besttrip.detail.recommend
+package com.example.mrokey.besttrip.detail
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -12,7 +12,7 @@ import android.content.Intent
 import android.net.Uri
 
 
-class RecommendDetailActivity: AppCompatActivity(),RecommendDetailContract.View{
+class RecommendDetailActivity: AppCompatActivity(), RecommendDetailContract.View {
     private var presenter: RecommendDetailContract.Presenter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

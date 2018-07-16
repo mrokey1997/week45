@@ -94,11 +94,6 @@ class RecommendActivity: AppCompatActivity(),RecommendContract.View, View.OnClic
             this.overridePendingTransition(0, R.anim.back_right)
         })
     }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        this.overridePendingTransition(0, R.anim.back_right)
-    }
     override fun setPresenter(presenter: RecommendContract.Presenter) {
         this.presenter = presenter
     }
