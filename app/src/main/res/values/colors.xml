@@ -7,12 +7,11 @@
     <color name="darkBlue">#271d5d</color>
     <color name="pinkOrange">#c74848</color>
     <color name="darkGreen">#1e9793</color>
-    <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="indigo">#e8eaf6</color>
     <color name="purple">#f3e5f5</color>
     <color name="deepPurple">#ede7f6</color>
-    <color name="normalColorText">#000000</color>
+    <color name="normalColorText">#442c2e</color>
 
     <!-- Expanding Collection -->
     <color name="bgGradientStart">#000000</color>
@@ -27,5 +26,21 @@
     <color name="colorListDivider">#e6e6e6</color>
 
     <color name="transparent">#00ffffff</color>
-    <color name="colorToolbar">#455a64</color>
+
+    <color name="colorToolbar">#feeae6</color>
+
+    <!-- Color system -->
+    <color name="backgroundParent">#292931</color>
+    <color name="backgroundChildren">#373740</color>
+    <color name="green">#37efba</color>
+    <color name="violet">#b15dff</color>
+    <color name="orange">#ff6951</color>
+    <color name="pink">#FF4181</color>
+    <color name="white">#FFFFFF</color>
+
+    <!-- Color system 2 -->
+    <color name="darkShrinePink">#fedbd0</color>
+    <color name="darkBrown">#442c2e</color>
+    <color name="lightShrinePink">#feeae6</color>
+
 </resources>

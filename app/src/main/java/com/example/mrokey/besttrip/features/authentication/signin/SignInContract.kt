@@ -21,7 +21,7 @@ interface SignInContract {
     interface Presenter{
         fun checkAccount(email:String, password: String)
 
-        fun CurrentAccount()
+        fun currentAccount()
 
         fun authWithGoogle(acct: GoogleSignInAccount)
 

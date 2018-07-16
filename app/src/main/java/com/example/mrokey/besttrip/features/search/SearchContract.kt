@@ -2,7 +2,6 @@ package com.example.mrokey.besttrip.features.search
 
 import android.content.Context
 import com.example.mrokey.besttrip.model.Example
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import retrofit2.Response
 

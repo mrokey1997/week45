@@ -1,5 +1,6 @@
 package com.example.mrokey.besttrip.home
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -102,12 +103,11 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCompleted(user: User) {
-        tv_name.text = user.name
-        Glide.with(this)
-                .load(user.picture)
-                .into(img_avatar)
-        nav_view.tv_name.text = user.name
+        val name = user.name
+        tv_name.text = "$name!"
+        nav_view.tv_name.text = name
         Glide.with(this)
                 .load(user.picture)
                 .into(nav_view.img_avatar)

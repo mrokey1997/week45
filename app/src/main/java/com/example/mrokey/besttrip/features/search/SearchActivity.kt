@@ -2,32 +2,24 @@ package com.example.mrokey.besttrip.features.search
 
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Location
-import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.support.design.widget.BottomSheetBehavior
-import android.support.design.widget.CoordinatorLayout
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.CheckBox
 import android.widget.Toast
 import com.example.mrokey.besttrip.R
 import com.example.mrokey.besttrip.features.direction.DirectionActivity
-import com.example.mrokey.besttrip.home.HomeActivity
 import com.example.mrokey.besttrip.model.Example
 import com.example.mrokey.besttrip.recommend.RecommendActivity
 import com.google.android.gms.common.ConnectionResult
@@ -44,7 +36,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import kotlinx.android.synthetic.main.activity_search.*
-import pub.devrel.easypermissions.EasyPermissions
 import retrofit2.Response
 import java.util.ArrayList
 
@@ -122,10 +113,10 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.
             }
 
         }
-        ic_direction.setOnClickListener(View.OnClickListener {
+        ic_direction.setOnClickListener {
             startActivity(Intent(this,DirectionActivity::class.java))
 
-        })
+        }
         img_start.setOnClickListener {
             if(type=="driving"){
                 val intent=Intent(this,RecommendActivity::class.java)
@@ -316,9 +307,9 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.
                 AlertDialog.Builder(this)
                         .setTitle("Location Permission Needed")
                         .setMessage("This app needs the Location permission, please accept to use location functionality")
-                        .setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                        .setPositiveButton("OK") { _, which ->
                             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION_CODE)
-                        })
+                        }
                         .create()
                         .show()
 

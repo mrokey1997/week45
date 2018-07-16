@@ -31,7 +31,11 @@
 
         <activity android:name=".features.authentication.AuthenticationActivity">
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
 
@@ -71,18 +75,12 @@
         <activity android:name=".company.CardCompanyActivity">
 
         </activity>
-        <activity android:name=".recommend.RecommendActivity" >
-
-        </activity>
-        <activity android:name=".detail.CompanyDetailActivity" />
         <activity android:name=".detail.RecommendDetailActivity" />
         <activity android:name=".company.OverviewTaxiActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
+        <activity android:name=".features.direction.DirectionActivity" />
+        <activity android:name=".recommend.RecommendActivity" />
     </application>
 
 </manifest>

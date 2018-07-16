@@ -3,30 +3,23 @@ package com.example.mrokey.besttrip.features.authentication.signin
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import com.example.mrokey.besttrip.R
-import com.example.mrokey.besttrip.features.search.SearchActivity
 import com.example.mrokey.besttrip.home.HomeActivity
 import com.facebook.CallbackManager
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 import com.google.android.gms.auth.api.Auth
-import com.google.android.gms.auth.api.signin.*
 import com.google.android.gms.common.api.GoogleApiClient
 import java.util.*
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.ConnectionResult
 import com.google.firebase.auth.FirebaseAuth
-
-
-
-
 
 class SignInFragment: Fragment(), SignInContract.View, GoogleApiClient.OnConnectionFailedListener {
 
@@ -40,11 +33,11 @@ class SignInFragment: Fragment(), SignInContract.View, GoogleApiClient.OnConnect
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter?.CurrentAccount()
+
         //Facebook
         mCallbackManager = CallbackManager.Factory.create()
-
         presenter = SignInPresenter(this, mCallbackManager)
+        presenter?.currentAccount()
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_sign_in,container, false)
@@ -119,7 +112,7 @@ class SignInFragment: Fragment(), SignInContract.View, GoogleApiClient.OnConnect
         }
 
         //Facebook
-        mCallbackManager.onActivityResult(requestCode, resultCode, data)
+        else mCallbackManager.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onSuccessLoginFacebook(result: LoginResult?) {

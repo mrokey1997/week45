@@ -26,22 +26,12 @@ class CompanyPresenter(internal var view: CompanyContract.View) : CompanyContrac
 
                     for (j in 0 until child.child("vehicle").childrenCount) {
                         val vehicleChild = child.child("vehicle").child(j.toString())
-                        val name = vehicleChild.child("name").value.toString()
-                        val numberSeat = vehicleChild.child("number_seat").value.toString()
-                        val price1km = vehicleChild.child("_1km").value.toString()
-                        val priceOver1km = vehicleChild.child("over_1km").value.toString()
-                        val priceOver30km = vehicleChild.child("over_30km").value.toString()
-
                         listTaxi.add(Vehicle(
                                 vehicleChild.child("name").value.toString(),
-                                numberSeat.toLong(),
-                                price1km.toLong(),
-                                priceOver1km.toDouble(),
-                                priceOver30km.toDouble()
-//                                vehicleChild.child("number_seat").value as Long,
-//                                vehicleChild.child("_1km").value as Long,
-//                                vehicleChild.child("over_1km").value as Double,
-//                                vehicleChild.child("over_30km").value as Double
+                                vehicleChild.child("number_seat").value.toString().toLong(),
+                                vehicleChild.child("_1km").value.toString().toLong(),
+                                vehicleChild.child("over_1km").value.toString().toDouble(),
+                                vehicleChild.child("over_30km").value.toString().toDouble()
                         ))
                     }
                     listCompany.add(Company(
@@ -49,7 +39,7 @@ class CompanyPresenter(internal var view: CompanyContract.View) : CompanyContrac
                             child.child("address").value.toString(),
                             child.child("phone").value.toString(),
                             listTaxi,
-                            child.child("wait_time").value as Long,
+                            child.child("wait_time").value.toString().toLong(),
                             child.child("logo").value.toString()
                     ))
                 }

@@ -60,10 +60,10 @@ class RecommendPresenter(internal var view: RecommendContract.View): RecommendCo
                                 }
                                 val priceFormat = PriceFormat.priceFormat(price) + " VND"
                                 when (vehicle.number_seat.toString()) {
-                                    "4" -> taxiFourSeats.add(Taxi(start,end,company, phone, priceFormat,distance, address, logo, vehicle))
-                                    "5" -> taxiFiveSeats.add(Taxi(start,end,company, phone, priceFormat,distance, address, logo, vehicle))
-                                    "7" -> taxiSevenSeats.add(Taxi(start,end,company, phone, priceFormat,distance, address, logo, vehicle))
-                                    "8" -> taxiEightSeats.add(Taxi(start,end,company, phone, priceFormat,distance, address, logo, vehicle))
+                                    "4" -> taxiFourSeats.add(Taxi(i,start,end,company, phone, priceFormat,distance, address, logo, vehicle))
+                                    "5" -> taxiFiveSeats.add(Taxi(i,start,end,company, phone, priceFormat,distance, address, logo, vehicle))
+                                    "7" -> taxiSevenSeats.add(Taxi(i,start,end,company, phone, priceFormat,distance, address, logo, vehicle))
+                                    "8" -> taxiEightSeats.add(Taxi(i,start,end,company, phone, priceFormat,distance, address, logo, vehicle))
                                 }
                                 startToEnd = distance
                             }
@@ -71,7 +71,7 @@ class RecommendPresenter(internal var view: RecommendContract.View): RecommendCo
                         }
                         i += 1
                     }
-                   val handler = android.os.Handler(Looper.getMainLooper())
+                    val handler = android.os.Handler(Looper.getMainLooper())
                     handler.post({
                         view.showLoading(false)
                         view.setView(taxiFourSeats,taxiFiveSeats,taxiSevenSeats,taxiEightSeats)})
