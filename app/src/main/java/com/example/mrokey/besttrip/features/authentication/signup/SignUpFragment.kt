@@ -34,6 +34,7 @@ class SignUpFragment: Fragment(),SignUpContract.View {
         val password: String = edt_password?.text.toString()
         presenter?.checkAccount(name, email, password)
     }
+
     override fun setPresenter(presenter: SignUpContract.Presenter) {
         this.presenter = presenter
     }
@@ -42,7 +43,7 @@ class SignUpFragment: Fragment(),SignUpContract.View {
         loadSignUp.visibility = if (isShow) View.VISIBLE else View.GONE
     }
 
-    override fun showError(message: String) {
+    override fun showNotification(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }

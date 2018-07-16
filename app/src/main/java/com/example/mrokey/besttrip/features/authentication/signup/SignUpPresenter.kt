@@ -23,7 +23,7 @@ class SignUpPresenter(internal var view: SignUpContract.View) : SignUpContract.P
                 if (task.isSuccessful) {
                     view.showLoading(false)
                     if(password.length < 6){
-                        view.showError("The password must be at least 6 characters long")
+                        view.showNotification("The password must be at least 6 characters long")
                     }
                     else {
                         // Sign in success, update UI with the signed-in user's information
@@ -37,17 +37,18 @@ class SignUpPresenter(internal var view: SignUpContract.View) : SignUpContract.P
                         currentUserDb?.child("email")?.setValue(email)
                         currentUserDb?.child("url")?.setValue(null)
                         currentUserDb?.child("uid")?.setValue(userId)
+                        view.showNotification("Success")
                     }
                 } else {
                     view.showLoading(false)
                     // If sign in fails, display a message to the user.
                     Log.w("BBB", "createUserWithEmail:failure", task.exception)
-                    view.showError("Authentication failed.") //unreasonable or already exists
+                    view.showNotification("Authentication failed.") //unreasonable or already exists
                 }
             }
         }
         else {
-            view.showError("Enter all details")
+            view.showNotification("Enter all details")
         }
     }
 //    private fun verifyEmail() {

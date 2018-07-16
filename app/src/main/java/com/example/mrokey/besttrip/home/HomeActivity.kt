@@ -14,6 +14,7 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.mrokey.besttrip.R
 import com.example.mrokey.besttrip.callbacks.GetUserCallback
+import com.example.mrokey.besttrip.company.OverviewTaxiActivity
 import com.example.mrokey.besttrip.entities.User
 import com.example.mrokey.besttrip.features.authentication.AuthenticationActivity
 import com.example.mrokey.besttrip.features.search.SearchActivity
@@ -29,11 +30,13 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
         mAuth = FirebaseAuth.getInstance()
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
+
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbarMenu, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
@@ -84,7 +87,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Toast.makeText(this@HomeActivity, "manage", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_taxi -> {
-                Toast.makeText(this@HomeActivity, "taxi", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, OverviewTaxiActivity::class.java))
             }
             R.id.nav_logout -> {
                 mAuth?.signOut()

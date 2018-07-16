@@ -17,6 +17,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:text="VinaSun"
+            android:textSize="@dimen/normalText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,6 +29,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:text="Vios"
+            android:textSize="@dimen/normalText"
             android:textColor="@color/darkBrown"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,6 +44,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:text="091123123"
+            android:textSize="@dimen/normalText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/tvCompany"
@@ -56,6 +59,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:text="92.000 VND"
+            android:textSize="@dimen/normalText"
             android:textColor="@color/darkBrown"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/darkShrinePink"
+    android:background="@color/white"
     tools:layout_editor_absoluteY="25dp">
 
     <android.support.constraint.ConstraintLayout
@@ -13,7 +13,7 @@
 
         <android.support.v7.widget.Toolbar
             android:background="@color/colorToolbar"
-            app:titleTextColor="@color/white"
+            app:titleTextColor="@color/darkBrown"
             android:id="@+id/tbRecommend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -44,6 +44,7 @@
                     android:drawablePadding="16dp"
                     android:drawableStart="@drawable/ic_my_location"
                     android:gravity="center|start"
+                    android:textSize="@dimen/normalText"
                     android:textColor="@color/darkBrown" />
 
                 <TextView
@@ -53,6 +54,7 @@
                     android:layout_marginStart="16dp"
                     android:background="@color/colorTransparent"
                     android:drawablePadding="16dp"
+                    android:textSize="@dimen/normalText"
                     android:drawableStart="@drawable/ic_destination"
                     android:gravity="center|start"
                     android:textColor="@color/darkBrown"
@@ -108,6 +110,7 @@
                 android:text="4 Seaters Economy Taxi"
                 android:textColor="@color/darkBrown"
                 android:textSize="@dimen/normalText"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -137,6 +140,7 @@
                 android:text="@string/view"
                 android:textColor="@color/darkBrown"
                 android:textStyle="bold"
+                android:textSize="@dimen/normalText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rv4_seater" />
 
@@ -150,6 +154,7 @@
                 android:text="5 Seaters Economy Taxi"
                 android:textColor="@color/darkBrown"
                 android:textSize="@dimen/normalText"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -180,6 +185,7 @@
                 android:text="@string/view"
                 android:textColor="@color/darkBrown"
                 android:textStyle="bold"
+                android:textSize="@dimen/normalText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rv5_seater" />
 
@@ -193,6 +199,7 @@
                 android:text="7 Seaters Economy Taxi"
                 android:textColor="@color/darkBrown"
                 android:textSize="@dimen/normalText"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -222,6 +229,7 @@
                 android:text="@string/view"
                 android:textColor="@color/darkBrown"
                 android:textStyle="bold"
+                android:textSize="@dimen/normalText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rv7_seater" />
 
@@ -235,6 +243,7 @@
                 android:text="8 Seaters Economy Taxi"
                 android:textColor="@color/darkBrown"
                 android:textSize="@dimen/normalText"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -268,6 +277,7 @@
                 android:text="@string/view"
                 android:textColor="@color/darkBrown"
                 android:textStyle="bold"
+                android:textSize="@dimen/normalText"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rv8_seater" />

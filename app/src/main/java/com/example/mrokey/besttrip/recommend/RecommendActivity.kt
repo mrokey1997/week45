@@ -37,7 +37,9 @@ class RecommendActivity: AppCompatActivity(),RecommendContract.View, View.OnClic
         val start = bundle.getString("start_location")
         val end = bundle.getString("end_location")
         val distance = bundle.getString("distance")
-        val startToEnd = distance.replace(" km", "").toFloat()
+        val startToEnd = distance.replace(" km", "")
+                .replace(".", "")
+                .replace(",", "").toFloat()
         startLocation.text = start
         endLocation.text = end
         presenter?.getData(start, end, startToEnd)
@@ -89,10 +91,10 @@ class RecommendActivity: AppCompatActivity(),RecommendContract.View, View.OnClic
         supportActionBar?.title = "Result"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        tbRecommend.setNavigationOnClickListener({
+        tbRecommend.setNavigationOnClickListener {
             onBackPressed()
             this.overridePendingTransition(0, R.anim.back_right)
-        })
+        }
     }
     override fun setPresenter(presenter: RecommendContract.Presenter) {
         this.presenter = presenter

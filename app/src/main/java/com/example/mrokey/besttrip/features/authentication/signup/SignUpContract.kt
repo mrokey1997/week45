@@ -6,7 +6,7 @@ interface SignUpContract {
 
         fun showLoading(isShow: Boolean)
 
-        fun showError(message: String)
+        fun showNotification(message: String)
 
         fun getAccount()
 
