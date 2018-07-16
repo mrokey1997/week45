@@ -10,6 +10,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.mrokey.besttrip.R
@@ -24,19 +25,21 @@ import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.content_home.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 
-class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, GetUserCallback.IGetUserResponse {
+class HomeActivity : AppCompatActivity(),HomeContract.View, NavigationView.OnNavigationItemSelectedListener, GetUserCallback.IGetUserResponse {
+
     var mAuth: FirebaseAuth? = null
+    private var presenter: HomeContract.Presenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
         mAuth = FirebaseAuth.getInstance()
+        presenter = HomePresenter(this)
+        presenter?.getData()
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
-
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbarMenu, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
@@ -46,12 +49,26 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         btnWhere.setOnClickListener {
             startActivity(Intent(this, SearchActivity::class.java))
         }
+
+    }
+    override fun setPresenter(presenter: HomeContract.Presenter) {
+        this.presenter = presenter
+    }
+
+    override fun setView(name: String, email: String, url: String) {
+        tv_name.text = name
+        nav_view.tv_name.text = name
+        nav_view.tv_email.text = email
+        Glide.with(this)
+                .load(url)
+                .into(nav_view.img_avatar)
     }
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
+            mAuth?.signOut()
         }
     }
 
@@ -75,7 +92,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             else -> super.onOptionsItemSelected(item)
         }
     }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
@@ -87,13 +103,13 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Toast.makeText(this@HomeActivity, "manage", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_taxi -> {
-                startActivity(Intent(this, OverviewTaxiActivity::class.java))
+                startActivity(Intent(this@HomeActivity,OverviewTaxiActivity::class.java))
+                Toast.makeText(this@HomeActivity, "taxi", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_logout -> {
                 mAuth?.signOut()
                 startActivity(Intent(this, AuthenticationActivity::class.java))
                 Toast.makeText(this@HomeActivity, "logout", Toast.LENGTH_SHORT).show()
-                Toast.makeText(this@HomeActivity, mAuth?.currentUser.toString(), Toast.LENGTH_SHORT).show()
             }
             R.id.nav_share -> {
                 Toast.makeText(this@HomeActivity, "share", Toast.LENGTH_SHORT).show()
